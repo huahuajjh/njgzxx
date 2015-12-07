@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/BigScreen/Shared/Site.cshtml";
+    var col = ViewCommon.DataEntiyies.Columns.FirstOrDefault(d=>d.Id == Model.ColumnId);
+}
+<style type="text/css">
+    #copyDY {
+        display: block;
+    }
+</style>
+@model Model.DataList
+<style type="text/css">
+    h3.infoTitle {
+        font-size:20px;
+        margin-top:40px;
+    }
+    .page-content {
+        padding-bottom:20px;
+    }
+</style>
+<div class="container">
+    <div class="x_home">
+        <div class="zynr_cont_job_nr">
+            <div class="page-title"><span class="glyphicon glyphicon-tags"></span> @col.Name| <span>GAN ZHI NET WORK</span></div>
+            <ul id="synopsis-content">
+                <li>
+                    <div class="page-header clear">
+                        <div style="width: 100%; text-align: center;">
+                            <h2>@Model.Name</h2>
+                            <div class="page-info">
+                                <label class="time-source">发布时间：@Model.CreateTime.ToString("yyyy-MM-dd")</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--行业新闻内容模块 begin-->
+                    <div class="page-content">
+                        @(new HtmlString(Model.Contents))
+                        <h3 class="infoTitle"><span class="glyphicon glyphicon-tasks"></span> 产品参数</h3>
+                        <hr />
+                        @(new HtmlString(Model.Other))
+                    </div>
+                </li>
+                <li>
+                    @{Html.RenderPartial("~/Views/Template/BigScreen/Shared/CompanyContactMessage.cshtml");}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

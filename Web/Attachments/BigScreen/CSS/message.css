@@ -1,0 +1,5 @@
+﻿.message > li { margin-bottom: 15px; }
+.message > li > input[type='text'] {padding: 5px;width: 300px;height: 28px;}
+.message > li > textarea {padding: 5px;width: 557px;height: 70px;resize: none;vertical-align: bottom;}
+.btn-submit {padding: 5px 20px;width: 100px;border-radius: 5px;border: none;background: #6495ed;color: #fff;font-weight: bold;}
+.btn-container {width: 600px;text-align: right;}

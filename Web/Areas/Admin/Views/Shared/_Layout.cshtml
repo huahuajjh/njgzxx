@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="cn" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="cn">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>后端管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="/assets/plugins/jquery-ui-1.10.4/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
+    <link href="/assets/plugins/bootstrap-3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/plugins/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/assets/css/animate.min.css" rel="stylesheet" />
+    <link href="/assets/css/style.min.css" rel="stylesheet" />
+    <link href="/assets/css/style-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/css/theme/default.css" rel="stylesheet" id="theme" />
+    <link href="/assets/plugins/parsley/src/parsley.css" rel="stylesheet" />
+    <link href="/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+    @RenderSection("styles", false)
+</head>
+<body>
+    <div id="page-loader" class="fade in"><span class="spinner"></span></div>
+    <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+        <div id="header" class="header navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand">后端管理系统</a>
+                    <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown navbar-user">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="hidden-xs">@Web.Common.Data.User.Username</span> <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInLeft">
+                            <li class="arrow"></li>
+                            <li><a href="#modal-editPassword" data-toggle="modal">修改密码</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@Url.Action("Index","Login")">安全退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="sidebar" class="sidebar">
+            <div data-scrollbar="true" data-height="100%">
+                <ul class="nav">
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-file-text"></i>
+                            <span>内容管理</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="@Url.Action("Index", "Content")">管理内容</a></li>
+                            <li><a href="@Url.Action("Add", "Content")">添加内容</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-file"></i>
+                            <span>产品管理</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="@Url.Action("Index", "Product")">管理产品</a></li>
+                            <li><a href="@Url.Action("Add", "Product")">添加产品</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-group"></i>
+                            <span>招聘管理</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="@Url.Action("Index", "Hiring")">管理招聘</a></li>
+                            <li><a href="@Url.Action("Add", "Hiring")">添加招聘</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-photo"></i>
+                            <span>轮播图管理</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="@Url.Action("Index", "Shuffling")">管理轮播图</a></li>
+                            <li><a href="@Url.Action("Add", "Shuffling")">添加轮播图</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "PageMessage")">
+                            <i class="fa fa-file-code-o"></i>
+                            <span>管理栏目介绍</span>
+                        </a>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-tasks"></i>
+                            <span>栏目管理</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="@Url.Action("Index", "Column")">管理栏目</a></li>
+                            <li><a href="@Url.Action("Add", "Column")">添加栏目</a></li>
+                            <li class="has-sub">
+                                <a href="javascript:;">
+                                    <b class="caret pull-right"></b>
+                                    管理栏目类型
+                                </a>
+                                <ul class="sub-menu">
+                                    <li><a href="@Url.Action("Index", "ColumnType")">管理类别</a></li>
+                                    <li><a href="@Url.Action("Add", "ColumnType")">新增类别</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="@Url.Action("Index", "Message")"><i class="fa fa-comment"></i> <span>管理留言</span></a></li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <i class="fa fa-desktop"></i>
+                            <span>系统管理</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="@Url.Action("Index", "User")">用户管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-bg"></div>
+        <div id="content" class="content">
+            @RenderBody()
+        </div>
+        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+    </div>
+    <form class="modal fade form-horizontal form-bordered" id="modal-editPassword" onsubmit="return false;" data-parsley-validate="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">修改密码</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable">新密码 * :</label>
+                        <div class="col-md-6 col-sm-6 ui-sortable">
+                            <input class="form-control" type="password" name="newPassword" placeholder="新密码" id="new_password"
+                                   data-parsley-required="true"
+                                   data-parsley-required-message="请输入密码" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable">重复密码 * :</label>
+                        <div class="col-md-6 col-sm-6 ui-sortable">
+                            <input class="form-control" type="password" placeholder="重复密码"
+                                   data-parsley-required="true"
+                                   data-parsley-required-message="请输入密码"
+                                   data-parsley-equalto="#new_password"
+                                   data-parsley-equalto-message="两次密码输入不一致" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable">旧密码 * :</label>
+                        <div class="col-md-6 col-sm-6 ui-sortable">
+                            <input class="form-control" type="password" name="oldPassword" placeholder="旧密码"
+                                   data-parsley-required="true"
+                                   data-parsley-required-message="请输入密码" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-success">修改</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="/assets/plugins/jquery-1.8.2/jquery-1.8.2.min.js"></script>
+    <script src="/assets/plugins/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js"></script>
+    <script src="/assets/plugins/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script src="/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+    <script src="/assets/plugins/parsley/dist/parsley.js"></script>
+    <script src="/assets/plugins/gritter/js/jquery.gritter.js"></script>
+    <script src="/assets/js/apps.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            App.init();
+        });
+        $("a[href='" + window.location.pathname + "']", "#sidebar")
+            .parent()
+            .addClass("active")
+            .parents(".has-sub")
+            .addClass("active");
+        function format(date, fmt) { //author: meizz
+            var o = {
+                "M+": date.getMonth() + 1,                 //月份
+                "d+": date.getDate(),                    //日
+                "H+": date.getHours(),                   //小时
+                "m+": date.getMinutes(),                 //分
+                "s+": date.getSeconds(),                 //秒
+                "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+                "S": date.getMilliseconds()             //毫秒
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        $("#modal-editPassword").parsley().subscribe('parsley:form:validate', function (formInstance) {
+            if (formInstance.isValid()) {
+                $.post("@Url.Action("EditPassword", "User")", $("#modal-editPassword").serialize(), function (state) {
+                    switch (state) {
+                        case "false":
+                            $.gritter.add({
+                                title: "系统提示",
+                                text: '旧密码不正确，请从新输入',
+                                class_name: "gritter-light"
+                            });
+                            break;
+                        case "true":
+                            $("#modal-editPassword").modal('hide');
+                            break;
+                        default:
+                            $.gritter.add({
+                                title: "系统提示",
+                                text: '系统错误',
+                                class_name: "gritter-light"
+                            });
+                    }
+                });
+            }
+        });
+    </script>
+    @RenderSection("scripts", false)
+</body>
+</html>

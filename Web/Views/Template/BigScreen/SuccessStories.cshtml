@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/BigScreen/Shared/Site.cshtml";
+    Model.Column col;
+    if (Model.Type == Web.Areas.Admin.Models.ColumnType.ColumnList)
+    {
+        col = ViewCommon.DataEntiyies.Columns.FirstOrDefault(d => d.Id == Model.ParentId);
+    }
+    else
+    {
+        col = Model;
+    }
+    var colList = ViewCommon.DataEntiyies.Columns.Where(d => d.ParentId == col.Id).ToList();
+}
+@model Model.Column
+@section style{
+    <style>
+        .kind-container > li {
+            display: inline-table;
+            padding: 5px 20px;
+        }
+
+        .kind-style1 {
+            cursor: pointer;
+            font-size: 16px;
+            color: #000;
+            background: #ccc;
+        }
+            .kind-style1 a {
+                color: #000;
+            }
+            .kind-style2 {
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+        }
+                .kind-style2 a {
+                    color: #666;
+                }
+
+        #accordion {
+            margin-bottom: 20px;
+        }
+
+            #accordion > label {
+                color: #565656;
+                width: 100%;
+                padding: 15px;
+                border: 1px #eee solid;
+                box-shadow: 2px 2px 2px #ccc;
+                display: block;
+                font-weight: bold;
+                font-size: 16px;
+                border-radius: 5px;
+                margin-top: 10px;
+                outline: none;
+            }
+
+            #accordion > a.solutions-ceontent-container {
+                display: block;
+                padding-left: 15px;
+                padding-right: 0;
+                height: 180px;
+                width: 800px;
+                overflow: hidden;
+            }
+
+                #accordion > a.solutions-ceontent-container > div {
+                    width: 600px;
+                    height: 150px;
+                    float: left;
+                    color: #565656;
+                    line-height: 22px;
+                    padding-top: 15px;
+                    overflow: hidden;
+                }
+
+                #accordion > a.solutions-ceontent-container > p {
+                    border: 1px solid #C0C0C0;
+                    box-shadow: 1px 2px 2px #ccc;
+                    float: right;
+                    padding: 3px;
+                }
+
+                    #accordion > a.solutions-ceontent-container > p > img {
+                        display: block;
+                    }
+    </style>
+}
+<div class="container">
+    <div class="x_home">
+        <div class="zynr_cont_job_nr">
+            <div class="page-title"><span class="glyphicon glyphicon-tags"></span> @col.Name | <span>GAN ZHI NET WORK</span></div>
+            <ul id="synopsis-content">
+                <li>
+                    <ul class="kind-container">
+                        <li class="@(Model.Id == col.Id ? "kind-style1" : "kind-style2")"><a href="@Url.Action("Column", "Home", new {id = col.Id})">All</a></li>
+                        @foreach (var item in colList)
+                        {
+                            <li class="@(Model.Id == item.Id ? "kind-style1" : "kind-style2")"><a href="@Url.Action("ColumnList", "Home", new { id = item.Id })">@item.Name</a></li>
+                        }
+                    </ul>
+                    <div id="accordion">
+                        @{
+                            var list = ViewCommon.DataEntiyies.DataLists.Where(d => d.ColumnId == Model.Id || d.ColumnListId == Model.Id).ToList();
+                            foreach (var item in list)
+                            {
+                                var url = Url.Action("Content", "Home", new { id = item.Id });
+                                <label><a href="@url" target="_blank" style="color:#000;">@item.Name</a></label>
+                                <a href="@url" target="_blank" class="solutions-ceontent-container">
+                                    <div>
+                                        @item.Describe
+                                    </div>
+                                    <p>
+                                        <img src="/FileImg/@item.Img" width="150" height="150" />
+                                    </p>
+                                </a>
+                            }
+                        }
+                    </div>
+                </li>
+                <li>
+                    @{Html.RenderPartial("~/Views/Template/BigScreen/Shared/CompanyContactMessage.cshtml");}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="/Attachments/BigScreen/Script/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#accordion").accordion({ event: "mouseover" });
+        });
+    </script>
+}

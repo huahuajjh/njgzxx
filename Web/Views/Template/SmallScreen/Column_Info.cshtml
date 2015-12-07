@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/SmallScreen/Shared/_Layout_One.cshtml";
+}
+@model Model.Column
+<div style="padding:20px 10px;">
+    @(new HtmlString(Model.Introduce))
+</div>

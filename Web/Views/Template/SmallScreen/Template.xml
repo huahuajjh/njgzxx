@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <!--单页面模版-->
+  <pageTemplate>
+    <index>
+      <shared name="内容页面模版" pageName="Column_Info" />
+      <shared name="留言页面模版" pageName="Message" />
+    </index>
+  </pageTemplate>
+  <!--内容页面模版-->
+  <contentTemplate>
+    <index>
+      <shared name="资讯列表模版" pageName="Column_List" />
+      <shared name="案例方案列表模版" pageName="Column_CaseList" />
+    </index>
+    <list>
+      <shared name="资讯列表模版" pageName="Column_List" />
+      <shared name="案例方案列表模版" pageName="Column_CaseList" />
+    </list>
+    <content>
+      <shared name="资讯内容模版" pageName="Content_Info" />
+      <shared name="案例方案内容模版" pageName="Column_CaseInfo" />
+    </content>
+  </contentTemplate>
+  <!--产品页面模版-->
+  <productTemplate>
+    <index>
+      <shared name="产品列表模版" pageName="Product_List" />
+    </index>
+    <list>
+      <shared name="产品列表模版" pageName="Product_List" />
+    </list>
+    <content>
+      <shared name="产品内容模版" pageName="Product_Info" />
+    </content>
+  </productTemplate>
+  <!--招聘页面模版-->
+  <hiringTemplate>
+    <index>
+      <shared name="招聘列表模版" pageName="Person_List" />
+    </index>
+    <content>
+      <shared name="招聘内容模版" pageName="Person_Info" />
+    </content>
+  </hiringTemplate>
+</template>

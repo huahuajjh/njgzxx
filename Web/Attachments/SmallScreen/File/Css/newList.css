@@ -1,0 +1,134 @@
+﻿.list_box dl {
+    padding: 10px 0px;
+    border-bottom: 1px solid #e3e3e3;
+    overflow: hidden;
+    clear: both;
+    position: relative;
+}
+
+    .list_box dl dt {
+        width: 90px;
+        float: left;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+        .list_box dl dt a {
+            display: block;
+        }
+
+.list_box a {
+    color: #000;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.list_box dl dt a img {
+    width:86px;
+    height:86px;
+    padding: 3px;
+    background: #fff;
+    border: 1px solid #f0eeef;
+    display: block;
+    box-shadow: 1px 2px 2px #ccc;
+}
+
+.list_box dl dd {
+    display: block;
+    -webkit-margin-start: 40px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 90px;
+}
+
+    .list_box dl dd.noImg {
+        padding-left: 0px;
+    }
+
+    .list_box dl dd h3 {
+        text-align: left;
+        display: block;
+        font-size: 1.17em;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        font-weight: bold;
+        margin: 0px;
+        margin-bottom: 5px;
+    }
+
+    .list_box dl dd ul {
+        list-style: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+        .list_box dl dd ul:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .list_box dl dd ul li {
+            float:left;
+            width:50%;
+            text-indent:10px;
+            font-size:10px;
+        }
+
+    .list_box dl dd h3 a {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .list_box dl dd p.p_01 {
+        text-align:left;
+        line-height: 18px;
+        height: 36px;
+        padding-top: 4px;
+        overflow: hidden;
+        display: block;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        margin: 0px;
+        padding: 0px;
+        margin-bottom:15px;
+    }
+
+        .list_box dl dd p.p_01 a {
+            font-size: 14px;
+            color: #737373;
+            font-weight: 400;
+            text-indent:2em;
+        }
+
+.list_box a {
+    color: #000;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.list_box dl dd p.p_02 {
+    display: block;
+    text-align: right;
+    line-height: 20px;
+    margin-top: 5px;
+}
+
+    .list_box dl dd p.p_02 i {
+        font-style: normal;
+        background: url(/File/Images/small.png) #cb0003 no-repeat;
+        padding: 0 3px 1px 21px;
+        position: relative;
+    }
+
+        .list_box dl dd p.p_02 i a {
+            color: #fff;
+            font-size: 14px;
+        }

@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link href="/assets/plugins/DataTables-1.10.2/css/data-table.css" rel="stylesheet" />
+    <link href="/assets/plugins/summernote/summernote.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="/assets/plugins/DataTables-1.10.2/js/jquery.dataTables.js"></script>
+    <script src="/assets/plugins/DataTables-1.10.2/js/data-table.js"></script>
+
+    <script src="/assets/plugins/summernote/summernote.min.js"></script>
+    <script src="/assets/plugins/summernote/lang/summernote-zh-CN.js"></script>
+
+    <script src="/assets/plugins/mustache/mustache.min.js"></script>
+
+    <script type="text/javascript">
+        $("#showmod").click(function () {
+            $('#modal-msg').modal('show');
+        });
+
+        var dataTab = $('#data-table').dataTable({
+            "bServerSide": true,
+            "sAjaxSource": "@Url.Action("Index", "PageMessage")",
+            "sServerMethod": "POST",
+            "bDeferRender": true,
+            "bProcessing": true,
+            "iDisplayLength": 10,
+            "aoColumns": [{
+                "mData": 'Id',
+                "sTitle": "编号"
+            }, {
+                "mData": 'Name',
+                "sTitle": "栏目名称"
+            }, {
+                "sClass": "text-center",
+                "mData": 'Id',
+                "sTitle": "操作",
+                "mRender": function (data, type, row) {
+                    var template = $('#template').html();
+                    Mustache.parse(template);
+                    var rendered = Mustache.render(template, { Id: data });
+                    return rendered;
+                }
+            }]
+        });
+        $('#data-table').on('draw.dt', function () {
+            $('[data-toggle="tooltip"]', "#data-table").tooltip()
+        });
+
+        function fnDraw() {
+            dataTab.fnDraw();
+        }
+
+        function showPageMsg(id) {
+            $.get("@Url.Action("Edit", "PageMessage")", {
+                id: id
+            }, function (html) {
+                $("#content-Val").html(html);
+                $('#modal-msg').modal('show');
+            });
+        }
+    </script>
+    <script type="text/x-mustache" id="template">
+        <a href="javascript:showPageMsg({{Id}});" class="btn btn-success btn-icon btn-circle btn-xs" data-toggle="tooltip" data-placement="bottom" title="编辑">
+            <i class="fa fa-pencil"></i>
+        </a>
+    </script>
+}
+
+<div class="panel panel-inverse">
+    <div class="panel-heading">
+
+        <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-expand" title="最大化"><i class="fa fa-expand"></i></a>
+            <a href="javascript:fnDraw();" class="btn btn-xs btn-icon btn-circle btn-success" data-toggle="tooltip" data-placement="bottom" title="刷新"><i class="fa fa-repeat"></i></a>
+        </div>
+        <h4 class="panel-title">管理栏目介绍</h4>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table id="data-table" class="table table-striped table-bordered">
+                @*<thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>栏目名称</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>Internet Explorer 4.0</td>
+                        <td class="text-center">
+                            <a id="showmod" class="btn btn-success btn-icon btn-circle btn-xs" data-toggle="tooltip" data-placement="bottom" title="编辑">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>Internet Explorer 4.0</td>
+                        <td class="text-center">
+                            <a class="btn btn-success btn-icon btn-circle btn-xs" data-toggle="tooltip" data-placement="bottom" title="编辑">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>*@
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-message fade" id="modal-msg">
+    <div class="modal-dialog">
+        <div class="modal-content" id="content-Val">
+        </div>
+    </div>
+</div>

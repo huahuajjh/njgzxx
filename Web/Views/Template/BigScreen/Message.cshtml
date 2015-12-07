@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/BigScreen/Shared/Site.cshtml";
+}
+@model Model.Column
+@section style{
+    <link href="/Attachments/BigScreen/CSS/message.css" rel="stylesheet" />
+    <style type="text/css">
+        .form-horizontal {
+            padding: 30px 130px;
+        }
+    </style>
+}
+<div class="container">
+    <div class="x_home">
+        <div class="zynr_cont_job_nr">
+            <div class="page-title" style="margin-bottom: 40px;"><span class="glyphicon glyphicon-tags"></span> 在线留言| <span>GAN ZHI NET WORK</span></div>
+            <ul id="synopsis-content">
+                <li>
+                    <form class="form-horizontal" id="msgForm" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">姓名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Name" placeholder="请输入你的姓名"
+                                       data-container="body"
+                                       data-trigger="manual"
+                                       data-toggle="popover"
+                                       data-placement="top"
+                                       data-content="请输入你的姓名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">手机号码</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Phone" placeholder="请输入你的手机号码"
+                                       data-container="body"
+                                       data-trigger="manual"
+                                       data-toggle="popover"
+                                       data-placement="top"
+                                       data-content="请输入你的手机号码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">邮箱</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Email" placeholder="请输入你的邮箱">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">留言内容</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="Contents" placeholder="请输入你要留言的内容" rows="5"
+                                          data-container="body"
+                                          data-trigger="manual"
+                                          data-toggle="popover"
+                                          data-placement="top"
+                                          data-content="请输入你要留言的内容"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">发 送</button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+                <li>
+                    @{Html.RenderPartial("~/Views/Template/BigScreen/Shared/CompanyContactMessage.cshtml");}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('input[name=Name],input[name=Phone],textarea[name=Contents]', "#msgForm").keydown(function () {
+        $(this).popover('destroy');
+    });
+
+    $('[data-toggle="popover"]').popover()
+
+    $("#msgForm").submit(function () {
+        var Name = $('input[name=Name]', "#msgForm");
+        var Phone = $('input[name=Phone]', "#msgForm");
+        var Contents = $('textarea[name=Contents]', "#msgForm");
+
+        if (Name.val() == "") {
+            Name.popover('show');
+        } else if (Phone.val() == "") {
+            Phone.popover('show');
+        } else if (Contents.val() == "") {
+            Contents.popover('show');
+        } else {
+            $.post("@Url.Action("SetMessage", "Home")", $(this).serialize(), function () {
+                alert("留言成功，后端人员审核后通知你细节。");
+                $("#msgForm")[0].reset();
+            });
+        }
+        return false;
+    });
+</script>

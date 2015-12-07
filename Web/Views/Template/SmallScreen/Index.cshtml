@@ -1,0 +1,126 @@
+﻿@{
+    Layout = "~/Views/Template/SmallScreen/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            var lunBoSwiper = new Swiper('#swiper-lunBo', {
+                autoplay: 5000,
+                loop: true,
+                calculateHeight: true,
+                pagination: '.pagination'
+            });
+        });
+    </script>
+}
+@section styles{
+    <link href="/Attachments/SmallScreen/File/Css/product.css" rel="stylesheet" />
+    <link href="/Attachments/SmallScreen/File/Css/newList.css" rel="stylesheet" />
+    <link href="/Attachments/SmallScreen/File/Css/index.css" rel="stylesheet" />
+    <style type="text/css">
+        .showGSMsg {
+            max-height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+            .showGSMsg:after {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                content: "";
+                display: block;
+                height: 50px;
+                background: -ms-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+                background: -moz-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+                background: -webkit-gradient(linear, 0% 0%, 0% 100%,from(rgba(255,255,255,0)), to(rgba(255,255,255,1)));
+                background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,0)), to(rgba(255,255,255,1))); 
+                background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1)); 
+                background: -o-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1)); 
+            }
+    </style>
+}
+<div class="swiper-container" id="swiper-lunBo">
+    <div class="swiper-wrapper">
+        @{
+            {
+                var list = ViewCommon.DataEntiyies.Shufflings.OrderBy(d => d.Sort).ToList();
+                foreach (var item in list)
+                {
+                    <div class="swiper-slide">
+                        <a href="@item.Url" class="lunBo">
+                            <img src="/FileImg/@item.Img" />
+                        </a>
+                    </div>
+                }
+            }
+        }
+    </div>
+    <div class="pagination"></div>
+</div>
+<section class="tem_index_about">
+    <div class="tem_inner">
+        <h3 class="tem_index_title">
+            <span>
+                感知网络简介
+            </span>
+        </h3>
+        <div class="met_editor">
+            <div class="showGSMsg">
+                @(new HtmlString(ViewCommon.DataEntiyies.Columns.FirstOrDefault(d => d.Id == 16).Introduce))
+            </div>
+            <div class="met_clear"></div>
+            <h4 class="tem_index_about_more"><a href="@Url.Action("Column", "Home", new { id = 16 })" title="了解更多" target="_self">了解更多</a></h4>
+        </div>
+    </div>
+</section>
+<section class="tem_index_news ">
+    <div class="tem_inner">
+        <h3 class="tem_index_title">
+            <span>
+                新闻中心
+                <p></p>
+            </span>
+        </h3>
+        <div class="list_box">
+            @{
+                {
+                    var list = ViewCommon.DataEntiyies.DataLists
+                        .Where(d => d.ColumnId == 25)
+                        .OrderBy(d => d.Id)
+                        .Take(5)
+                        .ToList();
+                    foreach (var item in list)
+                    {
+                        var url = Url.Action("Content", "Home", new { id = item.Id });
+                        <dl>
+                            @if (!string.IsNullOrEmpty(item.Img))
+                            {
+                                <dt>
+                                    <a href="@url" target="_blank" class="ui-link">
+                                        <img src="/FileImg/@item.Img" alt="@item.Name">
+                                    </a>
+                                </dt>
+                            }
+                            <dd class="@(!string.IsNullOrEmpty(item.Img)?"":"noImg")">
+                                <h3><a href="@url" title="@item.Name" target="_blank" class="ui-link">@item.Name</a></h3>
+                                <ul>
+                                    <li><span class="glyphicon glyphicon-time"></span> @item.CreateTime.ToString("yyyy-MM-dd")</li>
+                                    @{
+                            var listColModel = ViewCommon.DataEntiyies.Columns.FirstOrDefault(d => d.Id == item.ColumnListId);
+                            if (listColModel != null)
+                            {
+                                <li><span class="glyphicon glyphicon-tag"></span> @listColModel.Name</li>
+                            }
+                                    }
+                                </ul>
+                                <p class="p_01"><a href="@url" class="ui-link">@item.Describe</a></p>
+                            </dd>
+                        </dl>
+                    }
+                }
+            }
+        </div>
+        <h4 class="tem_index_more"><a href="@Url.Action("Column", "Home", new { id = 25 })" title="浏览更多文章" target="_self">浏览更多</a></h4>
+    </div>
+</section>

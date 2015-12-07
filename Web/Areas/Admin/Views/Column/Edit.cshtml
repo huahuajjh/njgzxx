@@ -1,0 +1,213 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model Model.Column
+@section styles{
+    <link href="/assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="/assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
+    <style type="text/css">
+        .dropdown-menu {
+            border: 1px solid #e2e7eb;
+        }
+    </style>
+}
+@section scripts{
+    <script src="/assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+
+    <script src="/assets/plugins/switchery/switchery.min.js"></script>
+    <script type="text/javascript">
+        $(".selectpicker").selectpicker("render");
+
+        if ($("[data-render=switchery]").length !== 0) {
+            $("[data-render=switchery]").each(function () {
+                var t = {};
+                t.color = "#727cb6";
+                t.secondaryColor = $(this).attr("data-secondary-color") ? $(this).attr("data-secondary-color") : "#dfdfdf";
+                t.className = $(this).attr("data-classname") ? $(this).attr("data-classname") : "switchery";
+                t.disabled = $(this).attr("data-disabled") ? true : false;
+                t.disabledOpacity = $(this).attr("data-disabled-opacity") ? $(this).attr("data-disabled-opacity") : .5;
+                t.speed = $(this).attr("data-speed") ? $(this).attr("data-speed") : "0.5s";
+                var n = new Switchery(this, t);
+            });
+        }
+
+        $("input[name=Type]").change(function () {
+            var val = $("input[name=Type]:checked").val();
+            if (val == "@Web.Areas.Admin.Models.ColumnType.Page") {
+                $(".displayTempList,.displayTempContent,#displayUrl").css("display", "none");
+                $("#displayTemp").css("display", "block");
+            } else if (val == "@Web.Areas.Admin.Models.ColumnType.Hiring") {
+                $(".displayTempList,#displayUrl").css("display", "none");
+                $(".displayTempContent").css("display", "table");
+                $("#displayTemp").css("display", "block");
+            } else if (val == "@Web.Areas.Admin.Models.ColumnType.UrlPage") {
+                $("#displayUrl").css("display", "block");
+                $("#displayTemp").css("display", "none");
+            } else {
+                $(".displayTempList,.displayTempContent").css("display", "table");
+                $("#displayTemp").css("display", "block");
+                $("#displayUrl").css("display", "none");
+            }
+            $.post("@Url.Action("Templates", "Column")", {
+                type: val
+            }, function (data) {
+                createCol(data);
+            }, "json");
+        });
+
+        $("input[name=Type]").change();
+
+        function createCol(data) {
+            console.log(data);
+            $("select[name=TemplateBigIndex],select[name=TemplateBigList],select[name=TemplateBigContent],select[name=TemplateSmallIndex],select[name=TemplateSmallList],select[name=TemplateSmallContent]").empty();
+            for (var i in data.Big.Indexs) {
+                $("select[name=TemplateBigIndex]").append(createOption(i, data.Big.Indexs[i], "@Model.TemplateBigIndex"));
+            }
+            for (var i in data.Big.Lists) {
+                $("select[name=TemplateBigList]").append(createOption(i, data.Big.Lists[i], "@Model.TemplateBigList"));
+            }
+            for (var i in data.Big.Contents) {
+                $("select[name=TemplateBigContent]").append(createOption(i, data.Big.Contents[i], "@Model.TemplateBigContent"));
+            }
+            for (var i in data.Small.Indexs) {
+                $("select[name=TemplateSmallIndex]").append(createOption(i, data.Small.Indexs[i], "@Model.TemplateSmallIndex"));
+            }
+            for (var i in data.Small.Lists) {
+                $("select[name=TemplateSmallList]").append(createOption(i, data.Small.Lists[i], "@Model.TemplateSmallList"));
+            }
+            for (var i in data.Small.Contents) {
+                $("select[name=TemplateSmallContent]").append(createOption(i, data.Small.Contents[i], "@Model.TemplateSmallContent"));
+            }
+        }
+        function createOption(key, val, defaultVal) {
+            var option = $('<option value="' + val + '">' + key + '</option>');
+            if (val == defaultVal)
+                option.prop("selected",true);
+            return option;
+        }
+    </script>
+}
+<form class="panel panel-inverse" method="post" data-parsley-validate="true" enctype="multipart/form-data" action="@Url.Action("Edit", "Column")">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="Introduce" value="@Model.Introduce" />
+    <div class="panel-heading">
+        <button type="submit" class="btn btn-primary btn-xs pull-right">提交</button>
+        <h4 class="panel-title">编辑栏目</h4>
+    </div>
+    <div class="panel-body panel-form">
+        <div class="form-horizontal form-bordered">
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">栏目名称 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" id="fullname" name="Name" placeholder="请输入栏目名称"
+                           value="@Model.Name"
+                           data-parsley-required="true"
+                           data-parsley-required-message="请输入栏目名称">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">是否显示 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input type="checkbox" data-render="switchery" data-theme="default" @(Model.Show ? "checked" : "") name="Show" value="true" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">栏目类型 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <div class="btn-group" data-toggle="buttons" style="width:100%;">
+                        <label class="btn btn-success btn-sm @(Model.Type == Web.Areas.Admin.Models.ColumnType.Content ? "active" : "")">
+                            <input @(Model.Type == Web.Areas.Admin.Models.ColumnType.Content ? "checked" : "")
+                                   type="radio" name="Type" value="@Web.Areas.Admin.Models.ColumnType.Content"> 内容列表
+                        </label>
+                        <label class="btn btn-success btn-sm @(Model.Type == Web.Areas.Admin.Models.ColumnType.Product ? "active" : "")">
+                            <input @(Model.Type == Web.Areas.Admin.Models.ColumnType.Product ? "checked" : "")
+                                   type="radio" name="Type" value="@Web.Areas.Admin.Models.ColumnType.Product"> 产品列表
+                        </label>
+                        <label class="btn btn-success btn-sm @(Model.Type == Web.Areas.Admin.Models.ColumnType.Hiring ? "active" : "")">
+                            <input @(Model.Type == Web.Areas.Admin.Models.ColumnType.Hiring ? "checked" : "")
+                                   type="radio" name="Type" value="@Web.Areas.Admin.Models.ColumnType.Hiring"> 招聘列表
+                        </label>
+                        <label class="btn btn-success btn-sm @(Model.Type == Web.Areas.Admin.Models.ColumnType.Page ? "active" : "")">
+                            <input @(Model.Type == Web.Areas.Admin.Models.ColumnType.Page ? "checked" : "")
+                                   type="radio" name="Type" value="@Web.Areas.Admin.Models.ColumnType.Page"> 单页面
+                        </label>
+                        <label class="btn btn-success btn-sm @(Model.Type == Web.Areas.Admin.Models.ColumnType.UrlPage ? "active" : "")">
+                            <input @(Model.Type == Web.Areas.Admin.Models.ColumnType.UrlPage ? "checked" : "")
+                                   type="radio" name="Type" value="@Web.Areas.Admin.Models.ColumnType.UrlPage"> 跳转栏目
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">栏目权重 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="number" name="Sort" value="@Model.Sort" min="0" max="255" placeholder="请输入栏目权重">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">所属栏目 :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <select class="form-control selectpicker" name="ParentId" data-size="10" data-live-search="true" data-style="btn-white">
+                        <option value="">顶级栏目</option>
+                        <optgroup label="栏目列表">
+                            @foreach (var item in ViewBag.Cols)
+                            {
+                                <option value="@item.Id" @(Model.ParentId == item.Id ? "selected" : "")>@item.Name</option>
+                            }
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" id="displayUrl" style="display:none;">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">跳转地址 :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" value="@Model.Url" name="Url" placeholder="url" />
+                </div>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable" for="message">栏目形象图 <a href="/FileImg/@Model.Img" target="_blank">查看</a> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input type="file" class="form-control" name="fileImg" />
+                </div>
+            </div>
+            <div id="displayTemp">
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-4 ui-sortable" for="message">大屏端模版 :</label>
+                    <div class="col-md-6 col-sm-6 ui-sortable">
+                        <div class="input-group m-b-5">
+                            <span class="input-group-addon">展示模版</span>
+                            <select class="form-control" name="TemplateBigIndex"></select>
+                        </div>
+                        <div class="input-group m-b-5 displayTempList">
+                            <span class="input-group-addon">类别模版</span>
+                            <select class="form-control" name="TemplateBigList"></select>
+                        </div>
+                        <div class="input-group m-b-5 displayTempContent">
+                            <span class="input-group-addon">内容模版</span>
+                            <select class="form-control" name="TemplateBigContent"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-4 ui-sortable" for="message">小屏端模版 :</label>
+                    <div class="col-md-6 col-sm-6 ui-sortable">
+                        <div class="input-group m-b-5">
+                            <span class="input-group-addon">展示模版</span>
+                            <select class="form-control" name="TemplateSmallIndex">
+                            </select>
+                        </div>
+                        <div class="input-group m-b-5 displayTempList">
+                            <span class="input-group-addon">类别模版</span>
+                            <select class="form-control" name="TemplateSmallList"></select>
+                        </div>
+                        <div class="input-group m-b-5 displayTempContent">
+                            <span class="input-group-addon">内容模版</span>
+                            <select class="form-control" name="TemplateSmallContent"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

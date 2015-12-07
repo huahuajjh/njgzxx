@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model Model.Hiring
+@section styles{
+    <link href="/assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="/assets/plugins/summernote/summernote.css" rel="stylesheet" />
+    <style type="text/css">
+        .dropdown-menu {
+            border: 1px solid #e2e7eb;
+        }
+    </style>
+}
+@section scripts{
+    <script src="/assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="/assets/plugins/summernote/summernote.min.js"></script>
+    <script src="/assets/plugins/summernote/lang/summernote-zh-CN.js"></script>
+    <script type="text/javascript">
+        $(".selectpicker").selectpicker("render");
+
+        $('#summernote').summernote({
+            lang: 'zh-CN',
+            minHeight: 300,
+            maxHeight: null,
+            focus: true,
+            onImageUpload: function (files, editor, welEditable) {
+                sendFile(files[0], editor, welEditable);
+            }
+        });
+
+        function sendFile(file, editor, welEditable) {
+            data = new FormData();
+            data.append("fileImg", file);
+            url = "@Url.Action("Index", "UploadImg")";
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: url,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (url) {
+                    editor.insertImage(welEditable, url);
+                }
+            });
+        }
+    </script>
+}
+<form class="panel panel-inverse" data-parsley-validate="true" onsubmit="$('textarea[name=Introduction]').val($('#summernote').code());"
+      method="post" enctype="multipart/form-data" action="@Url.Action("Edit", "Hiring")">
+    <input type="hidden" name="CreateDate" value="@Model.CreateDate.ToString()" />
+    <input type="hidden" name="CreateUser" value="@Model.CreateUser" />
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="panel-heading">
+        <button type="submit" class="btn btn-primary btn-xs pull-right">提交</button>
+        <h4 class="panel-title">编辑招聘</h4>
+    </div>
+    <div class="panel-body panel-form">
+        <div class="form-horizontal form-bordered">
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">招聘标题 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" name="Name" placeholder="请输入招聘标题" value="@Model.Name"
+                           data-parsley-required="true"
+                           data-parsley-required-message="请选输入招聘标题">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">招聘人数 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="number" min="1" value="@Model.PersonNum" name="PersonNum" placeholder="请输入招聘人数">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">工作地址 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" name="Address" value="@Model.Address" placeholder="请输入工作地址">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">所属部门 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" name="Department" placeholder="请输入所属部门" value="@Model.Department">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">工作方式 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" name="WorkType" placeholder="请输入工作方式" value="@Model.WorkType">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">薪酬 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" name="Salary" placeholder="请输入薪酬" value="@Model.Salary">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">所属栏目 :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <select class="form-control selectpicker" name="ColumnId" data-size="10" data-live-search="true" data-style="btn-white"
+                            data-parsley-required="true"
+                            data-parsley-required-message="请选择所属栏目">
+                        <option value="">请选择栏目</option>
+                        <optgroup label="栏目列表">
+                            @foreach (var item in ViewBag.Cols)
+                            {
+                                <option value="@item.Id" @(Model.ColumnId == item.Id ? "selected" : "")>@item.Name</option>
+                            }
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">招聘简介 :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <textarea class="form-control" name="Describe" placeholder="请输入招聘的简单介绍" maxlength="300" rows="5">@Model.Describe</textarea>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <textarea name="Introduction" style="display:none;"></textarea>
+                    <div id="summernote">@(new HtmlString(Model.Introduction))</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

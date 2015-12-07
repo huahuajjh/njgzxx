@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>南京感知信息</title>
+    <link href="/Attachments/SmallScreen/File/Css/layout.css" rel="stylesheet" />
+    <link href="/Attachments/SmallScreen/File/Plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Attachments/SmallScreen/File/Plugins/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="/Attachments/SmallScreen/File/Plugins/swiper/idangerous.swiper.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+    <script src="/Attachments/SmallScreen/File/Plugins/jquery/jquery-2.1.4.min.js"></script>
+    <script src="/Attachments/SmallScreen/File/Plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/Attachments/SmallScreen/File/Plugins/swiper/idangerous.swiper.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#h-menu").click(function () {
+                $("body").removeClass("hideMenu").addClass("showMenu");
+            });
+            $("#background-conten").click(function () {
+                $("body").removeClass("showMenu").addClass("hideMenu");
+            });
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <div id="left-content">
+        <div id="background-conten"></div>
+        <div class="header">
+            <a href="/" class="logo">
+                <img src="/Attachments/SmallScreen/File/Images/lo.png" />
+            </a>
+            <a href="javascript:void(0);" id="h-menu">
+                <img src="/Attachments/SmallScreen/File/Images/h-menu.png" />
+            </a>
+        </div>
+        @RenderBody()
+        <div class="foot-area">
+            <footer class="tem_footer">
+                <section class="tem_inner">
+                    <div class="tem_footer_nav"></div>
+                    <div class="tem_footer_text">
+                        <p>服务热线025-84529001</p><div class="metpcmobile">
+                            <a href="@Url.Action("SetMobile", "Home", new {
+                                    url = Url.Action(ViewContext.RouteData.Values["action"].ToString(),ViewContext.RouteData.Values["controller"].ToString()),
+                                    state = false })">访问电脑版</a>
+                        </div>
+                    </div>
+                </section>
+            </footer>
+            <div class="powered_by_metinfo">Copyright © 2001-2012 南京感知信息技术有限公司</div>
+        </div>
+    </div>
+    <div id="right-menu">
+        <ul class="menu">
+            <li><a href="/">主页</a></li>
+            @{
+                var list = ViewCommon.DataEntiyies.Columns.Where(d => d.ParentId == null && d.Show == true).ToList().OrderBy(d => d.Sort);
+                foreach (var item in list)
+                {
+                    switch (item.Type)
+                    {
+                        case Web.Areas.Admin.Models.ColumnType.UrlPage:
+                            {
+                                <li><a href="@item.Url">@item.Name</a></li>
+                            }
+                            break;
+                        default:
+                            {
+                                <li><a href="@Url.Action("Column", "Home", new { id = item.Id })">@item.Name</a></li>
+                            }
+                            break;
+                    }
+                }
+            }
+        </ul>
+    </div>
+</body>
+</html>

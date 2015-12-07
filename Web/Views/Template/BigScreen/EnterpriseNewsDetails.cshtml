@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/BigScreen/Shared/Site.cshtml";
+    var col = ViewCommon.DataEntiyies.Columns.FirstOrDefault(d => Model.ColumnListId == d.Id);
+}
+<style type="text/css">
+    #copyDY {
+        display:block;
+    }
+</style>
+@model Model.DataList
+<div class="container">
+    <div class="x_home">
+        <div class="zynr_cont_job_nr">
+            <div class="page-title"><span class="glyphicon glyphicon-tags"></span> @(col == null ? "" : col.Name)| <span>GAN ZHI NET WORK</span></div>
+            <ul id="synopsis-content">
+                <li>
+                    <div class="page-header clear">
+                        <div style="width: 100%; text-align: center;">
+                            <h2>@Model.Name</h2>
+                            <div class="page-info">
+                                <label class="time-source">发布时间：@(Model.CreateTime.ToString("yyyy-MM-dd"))</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--行业新闻内容模块 begin-->
+                    <div class="page-content">
+                        @(new HtmlString(Model.Contents))
+                    </div>
+                </li>
+                <li>
+                    @{Html.RenderPartial("~/Views/Template/BigScreen/Shared/CompanyContactMessage.cshtml");}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

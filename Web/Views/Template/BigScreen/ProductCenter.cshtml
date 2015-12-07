@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/BigScreen/Shared/Site.cshtml";
+}
+@model Model.Column
+@section style{
+    <style>
+        .x_home a:link, a:active, a:visited, a:hover {
+            color: #565656;
+        }
+
+        .x_home a {
+            font-size: 14px;
+            color: #565656;
+            display: block;
+            font-family: '微软雅黑';
+        }
+
+        .pc-content-container {
+            display: block;
+            width: 235px;
+            float: left;
+            margin: 0 20px 20px 0;
+            border: 1px solid #eee;
+        }
+
+            .pc-content-container > div {
+                width: 100%;
+                padding: 15px;
+                height: 50px;
+            }
+
+            .pc-content-container:hover {
+                z-index: 10;
+                background: #f8f8f8;
+                box-shadow: 0px 6px 17px rgba(110, 110, 110, .7);
+            }
+
+        ul#synopsis-content {
+            margin-top: 50px;
+        }
+    </style>
+}
+<div class="container">
+    <div class="x_home">
+        <div class="zynr_cont_job_nr">
+            <div class="page-title"><span class="glyphicon glyphicon-tags"></span> @Model.Name| <span>GAN ZHI NET WORK</span></div>
+            <ul id="synopsis-content">
+                <li>
+                    @{
+                        var list = ViewCommon.DataEntiyies.DataLists.Where(d => d.ColumnId == Model.Id || d.ColumnListId == Model.Id).ToList();
+                        foreach (var item in list)
+                        {
+                            <a href="@Url.Action("Product", "Home", new { id = item.Id })" class="pc-content-container">
+                                <img src="/FileImg/@item.Img" width="100%" />
+                                <div>@item.Name</div>
+                            </a>
+                        }
+                    }
+                </li>
+                <li>
+                    @{Html.RenderPartial("~/Views/Template/BigScreen/Shared/CompanyContactMessage.cshtml");}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

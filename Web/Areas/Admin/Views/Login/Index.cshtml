@@ -1,0 +1,108 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="cn" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="cn">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>后端管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="/assets/plugins/jquery-ui-1.10.4/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
+    <link href="/assets/plugins/bootstrap-3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/plugins/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/assets/css/animate.min.css" rel="stylesheet" />
+    <link href="/assets/css/style.min.css" rel="stylesheet" />
+    <link href="/assets/css/style-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/css/theme/default.css" rel="stylesheet" id="theme" />
+    <link href="/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+    <link href="/assets/plugins/parsley/src/parsley.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-loader" class="fade in"><span class="spinner"></span></div>
+
+    <div class="login-cover">
+        <div class="login-cover-image"><img src="/assets/img/login-bg/bg-2.jpg" data-id="login-cover-image" alt="" /></div>
+        <div class="login-cover-bg"></div>
+    </div>
+    <div id="page-container" class="fade">
+        <div class="login login-v2" data-pageload-addclass="animated flipInX">
+            <div class="login-header">
+                <div class="brand">
+                    后端管理系统
+                    <small>&nbsp;&nbsp;管理网站信息</small>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-sign-in"></i>
+                </div>
+            </div>
+
+            <div class="login-content">
+                <form id="submitInfo" data-parsley-validate="true" onsubmit="return false;">
+                    <div class="form-group m-b-20">
+                        <input type="text" class="form-control input-lg" name="userName" placeholder="用户名"
+                               data-parsley-required="true"
+                               data-parsley-required-message="请输入用户名" />
+                    </div>
+                    <div class="form-group m-b-20">
+                        <input type="password" class="form-control input-lg" name="password" placeholder="密码"
+                               data-parsley-required="true"
+                               data-parsley-required-message="请输入密码" />
+                    </div>
+                    <div class="login-buttons">
+                        <button type="submit" class="btn btn-success btn-block btn-lg">登陆</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/plugins/jquery-1.8.2/jquery-1.8.2.min.js"></script>
+    <script src="/assets/plugins/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js"></script>
+    <script src="/assets/plugins/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script src="/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+    <script src="/assets/js/login-v2.demo.min.js"></script>
+    <script src="/assets/js/apps.min.js"></script>
+    <script src="/assets/plugins/gritter/js/jquery.gritter.js"></script>
+    <script src="/assets/plugins/parsley/dist/parsley.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            App.init();
+            LoginV2.init();
+        });
+
+        $("#submitInfo").parsley().subscribe('parsley:form:validate', function (formInstance) {
+            if (formInstance.isValid()) {
+                $.post("@Url.Action("Index", "Login")", $("#submitInfo").serialize(), function (state) {
+                    switch (state) {
+                        case "not":
+                            $.gritter.add({
+                                title: "系统提示",
+                                text: '用户不存在，请核对后提交',
+                                class_name: "gritter-light"
+                            });
+                            break;
+                        case "no":
+                            $.gritter.add({
+                                title: "系统提示",
+                                text: '密码不匹配，请核对后提交',
+                                class_name: "gritter-light"
+                            });
+                            break;
+                        case "yes":
+                            location.href = "@Url.Action("Index", "Content")";
+                            break;
+                        default:
+
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

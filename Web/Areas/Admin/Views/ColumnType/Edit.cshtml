@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model Model.Column
+@section styles{
+    <link href="/assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .dropdown-menu {
+            border: 1px solid #e2e7eb;
+        }
+    </style>
+}
+@section scripts{
+    <script src="/assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script type="text/javascript">
+        $(".selectpicker").selectpicker("render");
+    </script>
+}
+<form method="post" action="@Url.Action("Edit", "ColumnType")" class="panel panel-inverse" data-parsley-validate="true">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="Img" value="@Model.Img" />
+    <input type="hidden" name="Introduce" value="@Model.Introduce" />
+    <input type="hidden" name="Show" value="@Model.Show.ToString()" />
+    <input type="hidden" name="TemplateBigContent" value="@Model.TemplateBigContent" />
+    <input type="hidden" name="TemplateBigIndex" value="@Model.TemplateBigIndex" />
+    <input type="hidden" name="TemplateBigList" value="@Model.TemplateBigList" />
+    <input type="hidden" name="TemplateSmallContent" value="@Model.TemplateSmallContent" />
+    <input type="hidden" name="TemplateSmallIndex" value="@Model.TemplateSmallIndex" />
+    <input type="hidden" name="TemplateSmallList" value="@Model.TemplateSmallList" />
+    <input type="hidden" name="Type" value="@Model.Type" />
+    <input type="hidden" name="Url" value="@Model.Url" />
+    <div class="panel-heading">
+        <button type="submit" class="btn btn-primary btn-xs pull-right">提交</button>
+        <h4 class="panel-title">编辑栏目类型</h4>
+    </div>
+    <div class="panel-body panel-form">
+        <div class="form-horizontal form-bordered">
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">栏目类型名称 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" name="Name" placeholder="请输入栏目类型名称" value="@Model.Name"
+                           data-parsley-required="true"
+                           data-parsley-required-message="请输入栏目类型名称">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">栏目类型权重 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="number" name="Sort" value="@Model.Sort" min="0" max="255" placeholder="请输入栏目类型权重">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">所属栏目 :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <select class="form-control selectpicker" name="ParentId" data-size="10" data-live-search="true" data-style="btn-white"
+                            data-parsley-required="true"
+                            data-parsley-required-message="请输入选择所属栏目">
+                        <optgroup label="栏目列表">
+                            @foreach (var item in ViewBag.ColList)
+                            {
+                                <option value="@item.Id" @(Model.ParentId == item.Id ? "selected" : "")>@item.Name</option>
+                            }
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

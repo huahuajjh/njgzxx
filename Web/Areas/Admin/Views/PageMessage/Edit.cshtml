@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+@model Model.Column
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">编辑 @Model.Name</h4>
+</div>
+<div class="modal-body">
+    <textarea id="summernote">@(new HtmlString(Model.Introduce))</textarea>
+</div>
+<div class="modal-footer">
+    <a href="javascript:sumPageMsg();" class="btn btn-sm btn-primary">保存</a>
+</div>
+<script type="text/javascript">
+    $('#summernote').summernote({
+        lang: 'zh-CN',
+        minHeight: 300,
+        maxHeight: null,
+        focus: true,
+        onImageUpload: function(files, editor, welEditable) {
+            sendFile(files[0],editor,welEditable);
+        }
+    });
+
+    function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("fileImg", file);
+        url = "@Url.Action("Index", "UploadImg")";
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: url,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (url) {
+                editor.insertImage(welEditable, url);
+            }
+        });
+    }
+
+    function sumPageMsg() {
+        $.post("@Url.Action("Edit", "PageMessage")", {
+            id:@Model.Id,
+            val:$("#summernote").code()
+        }, function () {
+            fnDraw();
+            $('#modal-msg').modal('hide');
+        });
+    }
+</script>

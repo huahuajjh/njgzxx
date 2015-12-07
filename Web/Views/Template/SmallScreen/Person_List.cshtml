@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/SmallScreen/Shared/_Layout_One.cshtml";
+}
+@model Model.Column
+@section styles{
+    <style type="text/css">
+        .box_l {
+            background: #f8f6f7;
+        }
+
+            .box_l .dl-list1 {
+                padding: 10px 15px;
+                border-top: 0;
+                border-bottom: 1px solid #e3e3e3;
+            }
+
+                .box_l .dl-list1:last-child {
+                    border-bottom-width: 0px;
+                }
+
+                .box_l .dl-list1 dt a {
+                    display: block;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    color: #000;
+                    font-size: 16px;
+                    font-weight: 400;
+                }
+
+                .box_l .dl-list1 .dd01 {
+                    font-size: 14px;
+                    padding: 8px 0;
+                    color: #999;
+                }
+
+                    .box_l .dl-list1 .dd01 span {
+                        text-indent: 2em;
+                        display: block;
+                    }
+
+                    .box_l .dl-list1 .dd01:after {
+                        content: "";
+                        display: block;
+                        clear: both;
+                    }
+
+                .box_l .dl-list1 .dd02 {
+                    line-height: 1.5em;
+                    font-size: 14px;
+                    overflow: hidden;
+                }
+    </style>
+}
+<div class="box_l">
+    @{
+        var list = ViewCommon.DataEntiyies.Hirings.Where(d => d.ColumnId == Model.Id).ToList();
+        foreach (var item in list)
+        {
+            <dl class="dl-list1">
+                <dt>
+                    <a href="@Url.Action("Hiring", "Home", new { id = item.Id })" class="ui-link">
+                        @item.Name
+                    </a>
+                </dt>
+                <dd class="dd01">
+                    <span>发布时间：@item.CreateDate.ToString("yyyy-MM-dd")</span>
+                    <span>招聘部门：@item.Department</span>
+                    <span>工作方式：@item.WorkType</span>
+                    <span>薪资待遇：@item.Salary</span>
+                    <span>招聘人数：@item.PersonNum</span>
+                </dd>
+                <dd class="dd02">
+                    工作地点：@item.Address
+                </dd>
+            </dl>
+        }
+    }
+</div>

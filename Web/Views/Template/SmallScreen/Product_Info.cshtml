@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/SmallScreen/Shared/_Layout_One.cshtml";
+}
+@model Model.DataList
+@section styles{
+    <style type="text/css">
+        .product-image {
+            width: 100%;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .tem_index_news_tab {
+            display: -webkit-box;
+            margin: 0 0 10px;
+            padding: 0px;
+            height: 35px;
+            border-right: 1px solid #8c989f;
+            list-style: none;
+            line-height: 35px;
+        }
+
+            .tem_index_news_tab li {
+                -webkit-box-flex: 1;
+            }
+
+                .tem_index_news_tab li.active a {
+                    background: #8c989f;
+                    color: #fff;
+                }
+
+                .tem_index_news_tab li a {
+                    text-decoration: none;
+                    color: #8c989f;
+                    display: block;
+                    margin: 0px;
+                    text-align: center;
+                    padding: 0 40px;
+                    height: 35px;
+                    border: 1px solid #8c989f;
+                    border-left-width: 0px;
+                    border-right-width: 0px;
+                    border-right: 0;
+                    font-weight: normal;
+                    line-height: 35px;
+                    cursor: pointer;
+                    font-size: 100%;
+                }
+
+        #swiper-showImage {
+            position: relative;
+        }
+    </style>
+}
+@section scripts{
+    <script type="text/javascript">
+        //$(function () {
+        //    var swiper_showImage = new Swiper('#swiper-showImage', {
+        //        loop: true,
+        //        calculateHeight: true,
+        //        pagination: '.pagination'
+        //    });
+        //});
+    </script>
+}
+@*<div class="swiper-container" id="swiper-showImage">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img class="product-image" src="http://m.metinfo.cn/include/thumb.php?dir=../upload/201404/1398232299.jpg&x=480&y=480" /></div>
+        <div class="swiper-slide"><img class="product-image" src="http://m.metinfo.cn/include/thumb.php?dir=../upload/201404/1398232299.jpg&x=480&y=480" /></div>
+    </div>
+    <div class="pagination"></div>
+</div>*@
+<img class="product-image" src="/FileImg/@Model.Img" />
+<hr style="border-top-color:#ccc;" />
+<div role="tabpanel">
+    <ul class="tem_index_news_tab" role="tablist">
+        <li class="active"><a href="#introduce" aria-controls="introduce" role="tab" data-toggle="tab">产品简介</a></li>
+        <li><a href="#parameter" aria-controls="parameter" role="tab" data-toggle="tab">技术参数</a></li>
+    </ul>
+    <div class="tab-content" style="padding:10px;">
+        <div role="tabpanel" class="tab-pane active" id="introduce">
+            @(new HtmlString(Model.Contents))
+        </div>
+        <div role="tabpanel" class="tab-pane" id="parameter">
+            @(new HtmlString(Model.Other))
+        </div>
+    </div>
+
+</div>

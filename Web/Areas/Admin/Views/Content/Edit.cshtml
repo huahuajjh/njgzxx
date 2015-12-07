@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model Model.DataList
+@section styles{
+    <link href="/assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="/assets/plugins/summernote/summernote.css" rel="stylesheet" />
+    <style type="text/css">
+        .dropdown-menu {
+            border: 1px solid #e2e7eb;
+        }
+    </style>
+}
+@section scripts{
+    <script src="/assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="/assets/plugins/summernote/summernote.min.js"></script>
+    <script src="/assets/plugins/summernote/lang/summernote-zh-CN.js"></script>
+    <script src="/assets/plugins/mustache/mustache.min.js"></script>
+    <script type="text/javascript">
+        $(".selectpicker").selectpicker("render");
+
+        function sendFile(file, editor, welEditable) {
+            data = new FormData();
+            data.append("fileImg", file);
+            url = "@Url.Action("Index", "UploadImg")";
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: url,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (url) {
+                    editor.insertImage(welEditable, url);
+                }
+            });
+        }
+
+        $("#colTop").change(function () {
+            var val = $(this).val();
+            $("#colList").empty();
+            $(".selectpicker").selectpicker('refresh');
+            $(".parsley-errors-list", ".dropdown-menu").remove();
+            if (val == "")
+                return;
+            $.post("@Url.Action("GetColList", "Content")", {
+                pId: val
+            }, function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var template = $('#template').html();
+                    Mustache.parse(template);
+                    var rendered = Mustache.render(template, { Id: data[i].Id, Name: data[i].Name });
+                    $("#colList").append(rendered);
+                }
+                $(".selectpicker").selectpicker('refresh');
+                $(".parsley-errors-list", ".dropdown-menu").remove();
+            }, "json");
+        });
+
+        $('#summernote').summernote({
+            lang: 'zh-CN',
+            minHeight: 300,
+            maxHeight: null,
+            focus: true,
+            onImageUpload: function (files, editor, welEditable) {
+                sendFile(files[0], editor, welEditable);
+            }
+        });
+    </script>
+    <script type="text/x-mustache" id="template">
+        <option value="{{Id}}">{{Name}}</option>
+    </script>
+}
+<form class="panel panel-inverse" data-parsley-validate="true" onsubmit="$('textarea[name=Contents]').val($('#summernote').code());"
+      method="post" enctype="multipart/form-data" action="@Url.Action("Edit", "Content")">
+    <input type="hidden" name="CreateTime" value="@Model.CreateTime.ToString()" />
+    <input type="hidden" name="CreateUser" value="@Model.CreateUser" />
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="Type" value="@Model.Type" />
+    <input type="hidden" name="Img" value="@Model.Img" />
+    <div class="panel-heading">
+        <button type="submit" class="btn btn-primary btn-xs pull-right">提交</button>
+        <h4 class="panel-title">编辑内容</h4>
+    </div>
+    <div class="panel-body panel-form">
+        <div class="form-horizontal form-bordered">
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">标题 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" placeholder="请输入栏目类型名称" name="Name" value="@Model.Name"
+                           data-parsley-required="true"
+                           data-parsley-required-message="请输入标题">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">展示图片 (150*150) <a href="/FileImg/@Model.Img" target="_blank">查看</a> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="file" name="fileImg">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">所属栏目 :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <select id="colTop" class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-white" name="ColumnId"
+                            data-parsley-required="true"
+                            data-parsley-required-message="请选择所属栏目">
+                        <option value="" selected>请选择栏目</option>
+                        <optgroup label="栏目列表">
+                            @foreach (var item in ViewBag.Cols)
+                            {
+                                <option value="@item.Id" @(Model.ColumnId == item.Id ? "selected" : "")>@item.Name</option>
+                            }
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">栏目类型 :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <select class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-white" name="ColumnListId">
+                        <option value="" selected>请选择栏目类型</option>
+                        <optgroup label="栏目类型列表" id="colList">
+                            @foreach (var item in ViewBag.ColLists)
+                            {
+                                <option value="@item.Id" @(Model.ColumnListId == item.Id ? "selected" : "")>@item.Name</option>
+                            }
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">内容简介 :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <textarea name="Describe" class="form-control" placeholder="请输入内容的简单介绍" maxlength="300" rows="5">@Model.Describe</textarea>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <textarea name="Contents" style="display:none;"></textarea>
+                    <div id="summernote">@(new HtmlString(Model.Contents))</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

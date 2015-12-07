@@ -1,0 +1,250 @@
+﻿.pagination {
+    position: absolute;
+    z-index: 20;
+    left: 10px;
+    width: 100%;
+    bottom: 5px;
+    text-align: center;
+}
+
+.swiper-pagination-switch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-right: 5px;
+    opacity: 0.8;
+    border: 2px solid #fff;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#synopsis-title {
+    position: relative;
+    height: 150px;
+}
+
+.scrolldoorFrame {
+    width: 1200px;
+    position: relative;
+    margin: 0px auto;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.xzbt {
+    width: 500px;
+    height: 160px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.xzbts {
+    width: 500px;
+    height: 160px;
+    position: relative;
+}
+
+.xzbt em {
+    width: 500px;
+    height: 50px;
+    display: block;
+    position: absolute;
+    top: 38px;
+    left: 0px;
+    line-height: 50px;
+    font-style: normal;
+    font-size: 40px;
+}
+
+    .xzbt em font {
+        font-family: Microsoft Yi Baiti;
+        font-size: 48px;
+        color: #b6b6b6;
+        padding-left: 10px;
+    }
+
+.xzbt span {
+    width: 500px;
+    height: 30px;
+    display: block;
+    position: absolute;
+    top: 95px;
+    left: 0px;
+    line-height: 30px;
+    font-size: 15px;
+    color: #989898;
+}
+
+.scrollUl {
+    width: 1200px;
+    height: 160px;
+    position: relative;
+    overflow: hidden;
+    padding-left: 730px;
+    overflow: hidden;
+    background: url('../Images/hm_new_top.png') no-repeat left bottom;
+}
+
+    .scrollUl li {
+        width: 115px;
+        height: 70px;
+        text-align: center;
+        line-height: 32px;
+        position: relative;
+        float: right;
+        margin-top: 90px;
+    }
+        .scrollUl li a {
+            color:#000;
+        }
+
+.sd01 {
+    background: url('../Images/hm_newhver.png') no-repeat center top;
+    cursor: pointer;
+    font-size: 16px;
+    color: #000;
+}
+
+.sd02 {
+    background: url('../Images/hm_newico.png') no-repeat center top;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+}
+
+.bor03 {
+    position: relative;
+    background: url('../Images/hm_footbt.png') no-repeat center bottom;
+    padding-bottom: 9px;
+}
+
+.cont {
+    padding: 0px;
+}
+
+.xz_hmnewtt {
+    width: 1200px;
+    height: 38px;
+    position: relative;
+    background: url('../Images/hm_toptt.png') no-repeat 0 0;
+}
+
+.xz_hmnewcn {
+    width: 1200px;
+    position: relative;
+    background: url('../Images/hm_conbg.png') repeat-y 0 0;
+}
+
+.xz_hm_news {
+    width: 600px;
+    height: 175px;
+    position: relative;
+    float: left;
+}
+
+    .xz_hm_news a {
+        width: 558px;
+        height: 150px;
+        display: block;
+        position: relative;
+        margin: 0px auto;
+    }
+
+        .xz_hm_news a img {
+            width: 150px;
+            height: 150px;
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+
+        .xz_hm_news a h1 {
+            width: 390px;
+            height: 29px;
+            display: block;
+            position: absolute;
+            top: 0;
+            margin: 0;
+            font-style: inherit;
+            font-size: 100%;
+            font-family: inherit;
+            left: 165px;
+            line-height: 29px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            color: #000;
+        }
+
+        .xz_hm_news a p {
+            width: 390px;
+            height: 29px;
+            display: block;
+            position: absolute;
+            margin: 0;
+            font-size: 100%;
+            font-family: inherit;
+            left: 185px;
+            top: 29px;
+            line-height: 29px;
+            cursor: pointer;
+            white-space: nowrap;
+            color: #b6b6b6;
+        }
+
+            .xz_hm_news a p > span {
+                font-size: 10px;
+            }
+
+        .xz_hm_news a > span {
+            width: 390px;
+            height: 66px;
+            display: block;
+            position: absolute;
+            top: 58px;
+            left: 165px;
+            line-height: 22px;
+            color: #666;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .xz_hm_news a:hover {
+            position: relative;
+            margin: 0 auto;
+            color: #000;
+            background: #f8f8f8;
+            box-shadow: 0 6px 17px rgba(110,110,110,.7);
+        }
+    .xz_hm_news.not_img > a img{
+        display:none;
+    }
+    .xz_hm_news.not_img > a h1 {
+        left:10px;
+        width:100%;
+    }
+    .xz_hm_news.not_img > a > span {
+        left:10px;
+        width:100%;
+    }
+    .xz_hm_news.not_img > a p {
+        left:30px;
+        width:100%;
+    }
+.content-container {
+    color: #5A5A5A;
+}
+
+.swiper-visible-switch {
+    background: #aaa;
+}
+
+.swiper-active-switch {
+    background: #fff;
+}

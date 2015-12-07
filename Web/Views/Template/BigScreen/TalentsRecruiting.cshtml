@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/BigScreen/Shared/Site.cshtml";
+}
+@model Model.Column
+@section style{
+    <link href="/Attachments/BigScreen/CSS/talents-recruiting.css" rel="stylesheet" />
+}
+<div class="width-percent">
+    @*<img src="/Attachments/BigScreen/Images/business-woman-460x292.png" width="100%" height="100%" />*@
+</div>
+<div class="x_home">
+    <div class="zynr_cont_job_nr">
+        <div class="page-title"><span class="glyphicon glyphicon-tags"></span> @Model.Name| <span>GAN ZHI NET WORK</span></div>
+        <ul>
+            @{
+                var list = ViewCommon.DataEntiyies.Hirings.Where(d => d.ColumnId == Model.Id).ToList();
+                foreach (var item in list)
+                {
+                    <li>
+                        <a href="@Url.Action("Hiring", "Home", new { id = item.Id })">
+                            <div>@item.Name（@item.PersonNum 人）</div>
+                            <ul class="recruiting-outline">
+                                <li><span>发布时间：</span>@item.CreateDate.ToString("yyy-MM-dd")</li>
+                                <li><span>招聘部门：</span>@item.Department</li>
+                                <li><span>工作方式：</span>@item.WorkType</li>
+                                <li><span>薪资待遇：</span>@item.Salary</li>
+                                <li><span>工作地点：</span>@item.Address</li>
+                            </ul>
+                            <div>
+                                <span class="glyphicon glyphicon-list-alt"></span>详细信息
+                            </div>
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+        <div style="clear: both;"></div>
+    </div>
+</div>

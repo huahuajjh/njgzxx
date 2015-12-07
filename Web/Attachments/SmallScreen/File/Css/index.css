@@ -1,0 +1,100 @@
+﻿a.lunBo {
+    display: block;
+}
+
+    a.lunBo img {
+        width: 100%;
+    }
+
+.tem_index_title {
+    margin: 0 0 20px 0;
+    padding: 0px 10px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+    font-weight: normal;
+    font-size: 22px;
+}
+
+    .tem_index_title span {
+        position: relative;
+        top: 2px;
+        display: inline-block;
+        padding: 10px 15px;
+        border-bottom: 4px solid #666;
+    }
+
+.tem_index_about .met_editor {
+    padding: 0px 8px;
+}
+
+.tem_index_about .met_editor {
+    overflow: hidden;
+}
+
+.tem_index_about_more {
+    margin: 0px;
+    padding-top: 20px;
+}
+
+.tem_index_about .met_editor a {
+    color: #1c57c4;
+}
+
+.tem_index_about_more a {
+    display: inline-block;
+    padding: 8px 30px;
+    border: 2px solid #eee;
+    color: #999 !important;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.tem_index_about {
+    padding: 20px 10px 30px;
+      background: #fff;
+}
+
+.tem_index_news {
+    padding: 20px 10px 30px;
+    text-align: center;
+    border-top: 1px solid #e7e8ed;
+    border-bottom: 1px solid #e7e8ed;
+}
+
+.tem_index_more {
+    clear: both;
+    margin: 0 auto;
+    width: 200px;
+    text-align: center;
+}
+
+    .tem_index_more a {
+        display: block;
+        height: 40px;
+        background: #E74C3C;
+        color: #fff;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 40px;
+    }
+
+.tem_inner, .met_section {
+    position: relative;
+}
+
+
+.tem_index_product {
+    padding: 20px 10px 30px;
+    border-top: 1px solid #e7e8ed;
+    border-bottom: 1px solid #e7e8ed;
+    background: #f7f8fa;
+}
+.tem_index_news_tab {
+    display: -webkit-box;
+    margin: 0 0 10px;
+    padding: 0px;
+    height: 35px;
+    border-right: 1px solid #8c989f;
+    list-style: none;
+    line-height: 35px;
+}

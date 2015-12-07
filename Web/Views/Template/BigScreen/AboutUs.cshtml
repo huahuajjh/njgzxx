@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/BigScreen/Shared/Site.cshtml";
+}
+<style type="text/css">
+    #copyDY {
+        display: block;
+    }
+</style>
+@model Model.Column
+<div class="container">
+    <div class="x_home">
+        <div class="zynr_cont_job_nr">
+            <div class="page-title">
+                <span class="glyphicon glyphicon-tags"></span> @Model.Name|
+                <span>GAN ZHI NET WORK</span>
+            </div>
+            <ul id="synopsis-content">
+                <li>
+                    @(new HtmlString(Model.Introduce))
+                </li>
+                <li>
+                    @{Html.RenderPartial("~/Views/Template/BigScreen/Shared/CompanyContactMessage.cshtml");}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

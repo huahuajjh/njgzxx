@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/SmallScreen/Shared/_Layout_One.cshtml";
+    var httpContext = System.Web.HttpContext.Current;
+    int pageIndex;
+    int pageCount = 10;
+    var obj = httpContext.Request["pageIndex"];
+    int.TryParse(obj == null ? "0" : obj.ToString(), out pageIndex);
+    int pageNum = Convert.ToInt32(
+        Math.Ceiling(ViewCommon.DataEntiyies.DataLists.Count(d => d.ColumnId == Model.Id || d.ColumnListId == Model.Id) * 1.00 / pageCount)) - 1;
+    if (pageNum < 0)
+    {
+        pageNum = 0;
+    }
+}
+@model Model.Column
+@section styles{
+    <link href="/Attachments/SmallScreen/File/Css/newList.css" rel="stylesheet" />
+}
+<div style="padding: 20px 10px 30px;">
+    <div class="list_box">
+        @{
+            var list = ViewCommon.DataEntiyies.DataLists.Where(d => d.ColumnId == Model.Id || d.ColumnListId == Model.Id)
+                .OrderByDescending(d=>d.Id)
+                .Skip(pageIndex * pageCount)
+                .Take(pageCount)
+                .ToList();
+            foreach (var item in list)
+            {
+                var url = Url.Action("Content", "Home", new { id = item.Id });
+                <dl>
+                    @if (!string.IsNullOrEmpty(item.Img))
+                    {
+                        <dt>
+                            <a href="@url" target="_blank" class="ui-link">
+                                <img src="/FileImg/@item.Img" alt="@item.Name">
+                            </a>
+                        </dt>
+                    }
+                    <dd class="@(!string.IsNullOrEmpty(item.Img)?"":"noImg")">
+                        <h3><a href="@url" title="@item.Name" target="_blank" class="ui-link">@item.Name</a></h3>
+                        <ul>
+                            <li><span class="glyphicon glyphicon-time"></span> @item.CreateTime.ToString("yyyy-MM-dd")</li>
+                            @{
+                    var listColModel = ViewCommon.DataEntiyies.Columns.FirstOrDefault(d => d.Id == item.ColumnListId);
+                    if (listColModel != null)
+                    {
+                        <li><span class="glyphicon glyphicon-tag"></span> @listColModel.Name</li>
+                    }
+                            }
+                        </ul>
+                        <p class="p_01"><a href="@url" class="ui-link">@item.Describe</a></p>
+                    </dd>
+                </dl>
+            }
+        }
+    </div>
+    <nav>
+        <ul class="pager" style="padding:0px 15px;">
+            @{
+                var perUrl = string.Empty;
+                if (pageIndex > 0)
+                {
+                    if (Model.Type == Web.Areas.Admin.Models.ColumnType.ColumnList)
+                    {
+                        perUrl =
+                            Url.Action("ColumnList", "Home", new { id = Model.Id });
+                    }
+                    else
+                    {
+                        perUrl = Url.Action("Column", "Home", new { id = Model.Id });
+                    }
+                    perUrl += "?pageIndex=" + (pageIndex - 1).ToString();
+                }
+                var nextUrl = string.Empty;
+                if (pageIndex < pageNum)
+                {
+                    if (Model.Type == Web.Areas.Admin.Models.ColumnType.ColumnList)
+                    {
+                        perUrl =
+                            Url.Action("ColumnList", "Home", new { id = Model.Id });
+                    }
+                    else
+                    {
+                        perUrl = Url.Action("Column", "Home", new { id = Model.Id });
+                    }
+                    perUrl += "?pageIndex=" + (pageIndex + 1).ToString();
+                }
+            }
+            <li class="previous"><a href="@perUrl"><span aria-hidden="true">&larr;</span>上一页</a></li>
+            <li style="line-height:35px;">@(pageIndex + 1) / @(pageNum + 1)</li>
+            <li class="next"><a href="@nextUrl">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+    </nav>
+</div>

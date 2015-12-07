@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+@model Model.Message
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">查看 @Model.Name 的留言</h4>
+</div>
+<div class="modal-body">
+    <blockquote>
+        <dl class="dl-horizontal f-s-10">
+            <dt>联系人</dt>
+            <dd>@Model.Name</dd>
+            <dt>手机号码</dt>
+            <dd>@Model.Phone</dd>
+            <dt>邮箱</dt>
+            <dd>@Model.Email</dd>
+            <dt>创建时间</dt>
+            <dd>@Model.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</dd>
+            <dt>留言内容</dt>
+            <dd>@Model.Contents</dd>
+        </dl>
+    </blockquote>
+</div>
+@if (!Model.IsSee)
+{
+    <div class="modal-footer">
+        <button type="button" onclick="sumDispose(@Model.Id);" class="btn btn-sm btn-success">已处理</button>
+    </div>
+}

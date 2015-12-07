@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "南京感知信息";
+    Layout = "~/Views/Template/BigScreen/Shared/Site.cshtml";
+}
+@section style{
+    <link href="/Attachments/BigScreen/CSS/index.css" rel="stylesheet" />
+    <link href="/Attachments/BigScreen/CSS/idangerous.swiper.css" rel="stylesheet" />
+    <style type="text/css">
+        .rightInfo {
+            margin-top: 0;
+        }
+    </style>
+}
+<div class="swiper-container" style="width:1200px;">
+    <div class="swiper-wrapper">
+        @{
+            {
+                var list = ViewCommon.DataEntiyies.Shufflings.OrderBy(d => d.Sort).ToList();
+                foreach (var item in list)
+                {
+                    <div class="swiper-slide">
+                        <a href="@item.Url">
+                            <img src="/FileImg/@item.Img" style="width:100%;" />
+                        </a>
+                    </div>
+                }
+            }
+        }
+    </div>
+    <div class="pagination"></div>
+</div>
+<div class="content-container container">
+    <div id="synopsis-title" class="xzbt">
+        <div class="xzbts"><em>关于我们<font>PROFILE</font></em><span>认识感知从这里开始</span></div>
+    </div>
+    <ul id="synopsis-content">
+        <li>
+            @(new HtmlString(ViewCommon.DataEntiyies.Columns.FirstOrDefault(d => d.Id == 16).Introduce))
+        </li>
+        <li>
+            @{Html.RenderPartial("~/Views/Template/BigScreen/Shared/CompanyContactMessage.cshtml");}
+        </li>
+    </ul>
+    <div class="scrolldoorFrame">
+        <div class="xzbt">
+            <div class="xzbts"><em>新闻中心<font>NEWS</font></em><span>了解感知最新动态，洞悉行业前沿资讯，探寻商业新模式。</span></div>
+        </div>
+        <ul class="scrollUl">
+            @{
+                var listCols = ViewCommon.DataEntiyies.Columns.Where(d => d.ParentId == 25).ToList();
+                foreach (var item in listCols)
+                {
+                    var url = Url.Action("ColumnList", "Home", new { id = item.Id });
+                    <li class="sd0@(listCols.Last().Id == item.Id ? "1" : "2")" value="@(item.Id)"><a href="@(url)">@(item.Name)</a></li>
+                }
+            }
+        </ul>
+        <div class="bor03 cont">
+            @foreach (var item in listCols)
+            {
+                var list = ViewCommon.DataEntiyies.DataLists
+                .Where(d => d.ColumnListId == item.Id)
+                .OrderBy(d => d.Id)
+                .Take(6)
+                .ToList();
+                <div id="c0@(item.Id)" class="@(listCols.Last().Id == item.Id ? "" : "hidden")">
+                    <div class="xz_hmnewtt"></div>
+                    <div class="xz_hmnewcn">
+                        @foreach (var t in list)
+                        {
+                            var url = Url.Action("Content", "Home", new { id = t.Id });
+                            <div class="xz_hm_news @(string.IsNullOrEmpty(t.Img) ? "not_img" : "")">
+                                <a href="@url" target="_blank" title="@t.Name">
+                                    <img src="/FileImg/@t.Img" alt="@t.Name">
+                                    <h1>@t.Name</h1>
+                                    <p><span class="glyphicon glyphicon-time"></span> @t.CreateTime.ToString("yyyy-MM-dd")</p>
+                                    <span class="news-content">@t.Describe</span>
+                                </a>
+                            </div>
+                        }
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="/Attachments/BigScreen/Script/idangerous.swiper.min.js"></script>
+    <script src="/Attachments/BigScreen/Script/jquery.ellipsis.js"></script>
+    <script type="text/javascript">
+        var mySwiper = new Swiper('.swiper-container', {
+            autoplay: 5000,
+            calculateHeight: true,
+            loop: true,
+            pagination: '.pagination',
+            paginationClickable: true
+        });
+        $(function () {
+            $(".news-content").ellipsis({ row: 3 });
+            $(".scrollUl > li").mouseover(function () {
+                $(this).attr("class", "sd01").siblings().attr("class", "sd02");
+                $("#c0" + $(this).attr("value")).removeClass().siblings().addClass("hidden");
+            });
+            $(".xz_hm_news > a > img").each(function () {
+                if ($(this).attr("src") == "") {
+                    $(this).css("display", "none").nextAll().css("left", "0");
+                }
+            });
+        });
+    </script>
+}
+

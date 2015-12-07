@@ -1,0 +1,37 @@
+﻿.recruiting-outline {
+    margin-left: 18px;
+    color: #818181;
+}
+.zynr_cont_job_nr > ul > li
+{
+    width: auto;
+    height: auto;
+}
+.zynr_cont_job_nr > ul > li > a {
+    width: 500px;
+    height: 278px;
+    background-color: #fff;
+    border: 1px solid #CCC;
+    margin: 22px;
+    float: left;
+    line-height: 35px;
+}
+.zynr_cont_job_nr > ul > li > a:hover {
+    box-shadow: 0 6px 17px rgba(110, 110, 110, .7);
+}
+.zynr_cont_job_nr > ul > li > a > div:first-child {
+    border-bottom: 1px solid #ccc;
+    width: 96%;
+    margin: 0 auto;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #565656;
+}
+.zynr_cont_job_nr > ul > li > a > div:last-child {
+    text-align: right;
+    padding-right: 20px;
+    color: #565656;
+}
+ .zynr_cont_job_nr .glyphicon {margin-right: 5px;}
+ div.page-title{ margin-left: 20px;margin-bottom: 0;}

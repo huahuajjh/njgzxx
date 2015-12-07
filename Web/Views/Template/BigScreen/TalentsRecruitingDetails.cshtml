@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/BigScreen/Shared/Site.cshtml";
+}
+@section style{
+    <link href="/Attachments/BigScreen/CSS/talents-recruitingdetails.css" rel="stylesheet" />
+    <style type="text/css">
+    .met_title {
+        margin-top:30px;
+        font-size:15px;
+        font-weight:800;
+    }
+    .met_nav_contbox {
+        padding:0px 20px;
+    }
+
+        #copyDY {
+            display: block;
+        }
+    </style>
+}
+@model Model.Hiring
+<div class="x_home">
+    <!--共用标题 begin-->
+    <div class="x_title">
+        <div class="x_title_1">
+            <em>加入我们<font>GAN ZHI NET WORK</font></em>
+            <span>
+                欢迎有梦想，有激情，有真心的您加入感知，与我们一起扬帆起航！<br />
+                联系电话：025-84529001 请先将您的简历发到我们的邮箱 gz@shgz.com，我们会尽快与您联系。
+            </span>
+        </div>
+    </div>
+    <div class="recruitment-particular-container">
+        <div class="position-title"><span class="glyphicon glyphicon-paperclip"></span> @Model.Name</div>
+        <div class="details-recruitment-outline">
+            <ul class="info-list">
+                <li><span>发布时间：</span>@Model.CreateDate.ToString("yyy-MM-dd")</li>
+                <li><span>招聘部门：</span>@Model.Department</li>
+                <li><span>工作方式：</span>@Model.WorkType</li>
+                <li><span>招聘人数：</span>@Model.PersonNum</li>
+                <li><span>薪资待遇：</span>@Model.Salary</li>
+                <li><span>工作地点：</span>@Model.Address</li>
+            </ul>
+            <h4 class="met_title"><span class="glyphicon glyphicon-list-alt"></span> 详细信息</h4>
+            <div class="met_nav_contbox">
+                @(new HtmlString(Model.Introduction))
+            </div>
+        </div>
+    </div>
+</div>
+   

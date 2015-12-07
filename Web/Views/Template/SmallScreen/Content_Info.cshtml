@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/SmallScreen/Shared/_Layout_One.cshtml";
+}
+@model Model.DataList
+@section styles{
+    <style type="text/css">
+        .met_infos {
+            margin: 0px 0px 15px;
+            padding: 10px 10px;
+            border-bottom: 1px solid #ddd;
+            color: #818181;
+            font-size: 12px;
+        }
+
+            .met_infos span {
+                padding-right: 6px;
+            }
+    </style>
+}
+<div class="met_infos">
+    <span><span class="glyphicon glyphicon-time"></span> @(Model.CreateTime.ToString("yyyy-MM-dd"))</span>
+    @{
+        var xyName = string.Empty;
+        var listColModel = ViewCommon.DataEntiyies.Columns.FirstOrDefault(d => d.Id == Model.ColumnListId);
+        if (listColModel != null)
+        {
+            xyName = listColModel.Name;
+        }
+    }
+    <span><span class="glyphicon glyphicon-tag"></span> @xyName</span>
+</div>
+<div style="padding:20px 10px;">
+    @(new HtmlString(Model.Contents))
+</div>

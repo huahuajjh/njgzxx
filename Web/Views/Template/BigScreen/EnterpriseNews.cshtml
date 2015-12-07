@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/BigScreen/Shared/Site.cshtml";
+    var httpContext = System.Web.HttpContext.Current;
+    int pageIndex;
+    int pageCount = 15;
+    var obj = httpContext.Request["pageIndex"];
+    int.TryParse(obj == null ? "0" : obj.ToString(), out pageIndex);
+    int pageNum = Convert.ToInt32(
+        Math.Ceiling(ViewCommon.DataEntiyies.DataLists.Count(d => d.ColumnId == Model.Id || d.ColumnListId == Model.Id) * 1.00 / pageCount)) - 1;
+    if (pageNum < 0)
+    {
+        pageNum = 0;
+    }
+}
+@section style{
+    <style>
+        .fx_mod_proitem:last-child {
+            border-bottom-width: 0px;
+        }
+
+        .fx_mod_proitem {
+            width: 100%;
+            font-size: 14px;
+            letter-spacing: 0;
+            position: relative;
+            display: block;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+        }
+
+        .x_new1s_1 {
+            position: relative;
+        }
+
+            .x_new1s_1 a {
+                display: block;
+                position: relative;
+                color: #000;
+                padding-bottom: 20px;
+                padding-left: 180px;
+            }
+
+                .x_new1s_1 a img {
+                    width: 150px;
+                    height: 150px;
+                    display: block;
+                    position: absolute;
+                    top: 15px;
+                    left: 15px;
+                }
+
+                .x_new1s_1 a h1 {
+                    display: block;
+                    font-weight: bold;
+                    cursor: pointer;
+                    margin: 0;
+                    padding-top: 20px;
+                    padding-bottom: 10px;
+                    font-size: 16px;
+                }
+
+                .x_new1s_1 a > span {
+                    height: 85px;
+                    display: block;
+                    line-height: 22px;
+                    color: #666;
+                    cursor: pointer;
+                }
+
+                .x_new1s_1 a > p > span {
+                    font-size: 10px;
+                    text-indent: 2em;
+                }
+
+            .x_new1s_1.noImg a > img {
+                display: none;
+            }
+
+            .x_new1s_1.noImg a {
+                padding-left: 15px;
+            }
+    </style>
+}
+@model Model.Column
+<div class="container">
+    <div class="x_home">
+        <div class="zynr_cont_job_nr">
+            <div class="page-title"><span class="glyphicon glyphicon-tags"></span> @Model.Name| <span>GAN ZHI NET WORK</span></div>
+            <ul id="synopsis-content">
+                <li>
+                    @{
+                        var list = ViewCommon.DataEntiyies.DataLists.Where(d => d.ColumnListId == Model.Id || d.ColumnId == Model.Id).ToList();
+                        foreach (var item in list)
+                        {
+                            var url = Url.Action("Content", "Home", new { id = item.Id });
+                            <div class="fx_mod_proitem">
+                                <div class="x_new1s_1 @(string.IsNullOrEmpty(item.Img) ? "noImg" : "")">
+                                    <a href="@url" target="_blank" title="@item.Name">
+                                        <img src="/FileImg/@item.Img" alt="@item.Name">
+                                        <h1>@item.Name</h1>
+                                        <p><span class="glyphicon glyphicon-time"></span> @item.CreateTime.ToString("yyyy-MM-dd")</p>
+                                        <span>@item.Describe</span>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div style="text-align:center;">
+                        <ul class="pagination">
+                            @for (int i = 0; i == pageNum; i++)
+                            {
+                                <li class="@(pageIndex == i ? "active" : "")">
+                                    <a href="@Url.Action("Column", "Home", new { id = Model.Id })?pageIndex=@i">@(i + 1)</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    @{Html.RenderPartial("~/Views/Template/BigScreen/Shared/CompanyContactMessage.cshtml");}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

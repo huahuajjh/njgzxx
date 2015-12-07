@@ -1,0 +1,170 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/SmallScreen/Shared/_Layout_One.cshtml";
+}
+@model Model.Column
+@section styles{
+    <style type="text/css">
+        .v52fmbx {
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-top: 0;
+            text-align: left;
+        }
+        .v52fmbx dl {
+            position: relative;
+            margin: 0;
+            padding: 5px 0;
+            border-top: 1px solid #ddd;
+            width: 100%;
+            background: #fff;
+            zoom: 1;
+        }
+            .v52fmbx dl dt {
+                overflow: hidden;
+                padding: 15px 15px 10px 15px;
+                text-align: left;
+                font-weight: normal;
+                line-height: 1.2;
+            }
+            .v52fmbx dl dd {
+                margin: 0;
+                padding: 2px 0 0 15px;
+            }
+                .v52fmbx dl dd .fbox {
+                    margin: 0 10px 10px 0;
+                }
+                .v52fmbx dl dd .tips {
+                    color: #aaa;
+                    padding-top: 5px;
+                }
+        .ftype_input .fbox input {
+            padding: 2px 5px;
+            width: 95%;
+            height: 45px;
+            outline: 0;
+            border: 1px solid #dcdfe0;
+            border-radius: 2px;
+            background-color: #fff;
+            vertical-align: middle;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            line-height: normal;
+            margin: 0;
+            color: #333;
+        }
+            .ftype_input .fbox input:hover, .ftype_textarea .fbox textarea:hover {
+                border: 1px solid #23b7e5;
+            }
+        .ftype_textarea textarea {
+            padding: 7px 5px;
+            width: 95%;
+            height: 100px;
+            outline: 0;
+            border: 1px solid #dcdfe0;
+            background-color: #fff;
+            color: #333;
+            line-height: 1.5;
+        }
+        .v52fmbx dl.noborder {
+            border-bottom: 0;
+        }
+        .submit {
+            display: block;
+            padding: 0 35px;
+            height: 34px;
+            border: 0 none;
+            border-radius: 2px;
+            background: #23b7e5;
+            color: #fff;
+            font-family: 'Microsoft YaHei',Tahoma,Verdana,'Simsun';
+            line-height: 26px;
+            cursor: pointer;
+        }
+        .v52fmbx dl.noborder dt {
+            display: none;
+        }
+        .v52fmbx dl.noborder dd {
+            padding: 10px 15px;
+        }
+    </style>
+}
+@section scripts{
+    <script type="text/javascript">
+
+    </script>
+}
+<form enctype="multipart/form-data" id="msgForm">
+    <div class="v52fmbx">
+        <dl>
+            <dt class="ftype_select">姓名</dt>
+            <dd class="ftype_input">
+                <div class="fbox">
+                    <input name="Name" type="text" size="30" class="input-text">
+                </div>
+                <span class="tips"></span>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt class="ftype_select">电话</dt>
+            <dd class="ftype_input">
+                <div class="fbox">
+                    <input name="Phone" type="text" size="30" class="input-text">
+                </div>
+                <span class="tips"></span>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt class="ftype_select">Email</dt>
+            <dd class="ftype_input">
+                <div class="fbox">
+                    <input name="Email" type="text" size="30" class="input-text">
+                </div>
+                <span class="tips"></span>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt class="ftype_select">留言内容</dt>
+            <dd class="ftype_textarea">
+                <div class="fbox">
+                    <textarea name="Contents" class="textarea-text" cols="50" rows="5"></textarea>
+                </div>
+                <span class="tips"></span>
+            </dd>
+        </dl>
+
+        <dl class="noborder">
+            <dt>&nbsp;</dt>
+            <dd>
+                <input type="submit" name="submit" value="提交信息" class="submit">
+            </dd>
+        </dl>
+    </div>
+</form>
+<script type="text/javascript">
+    $('input[name=Name],input[name=Phone],textarea[name=Contents]', "#msgForm").keydown(function () {
+        $(this).closest(".ftype_input,.ftype_textarea").find(".tips").html("");
+    });
+
+    $("#msgForm").submit(function () {
+        var Name = $('input[name=Name]', "#msgForm");
+        var Phone = $('input[name=Phone]', "#msgForm");
+        var Contents = $('textarea[name=Contents]', "#msgForm");
+
+        if (Name.val() == "") {
+            Name.closest(".ftype_input").find(".tips").html("请输入你的姓名");
+        } else if (Phone.val() == "") {
+            Phone.closest(".ftype_input").find(".tips").html("请输入你的手机号码");
+        } else if (Contents.val() == "") {
+            Contents.closest(".ftype_textarea").find(".tips").html("请输入留言内容");
+        } else {
+            $.post("@Url.Action("SetMessage", "Home")", $(this).serialize(), function () {
+                alert("留言成功，后端人员审核后通知你细节。");
+            });
+        }
+        return false;
+    });
+</script>

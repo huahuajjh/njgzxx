@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<template>
+  <!--单页面模版-->
+  <pageTemplate>
+    <index>
+      <shared name="内容页面模版" pageName="AboutUs" />
+      <shared name="留言页面模版" pageName="Message" />
+    </index>
+  </pageTemplate>
+  <!--内容页面模版-->
+  <contentTemplate>
+    <index>
+      <shared name="资讯列表模版" pageName="EnterpriseNews" />
+      <shared name="方案列表模版" pageName="SOASolutionCenter" />
+      <shared name="案例列表模版" pageName="SuccessStories" />
+    </index>
+    <list>
+      <shared name="资讯列表模版" pageName="EnterpriseNews" />
+      <shared name="案例列表模版" pageName="SuccessStories" />
+    </list>
+    <content>
+      <shared name="内容模版" pageName="EnterpriseNewsDetails" />
+    </content>
+  </contentTemplate>
+  <!--产品页面模版-->
+  <productTemplate>
+    <index>
+      <shared name="产品列表模版" pageName="ProductCenter" />
+    </index>
+    <list>
+      <shared name="产品列表模版" pageName="ProductCenter" />
+    </list>
+    <content>
+      <shared name="产品内容模版" pageName="ProductCenterDetails" />
+    </content>
+  </productTemplate>
+  <!--招聘页面模版-->
+  <hiringTemplate>
+    <index>
+      <shared name="招聘列表模版" pageName="TalentsRecruiting" />
+    </index>
+    <content>
+      <shared name="招聘内容模版" pageName="TalentsRecruitingDetails" />
+    </content>
+  </hiringTemplate>
+</template>

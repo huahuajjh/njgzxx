@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/SmallScreen/Shared/_Layout_One.cshtml";
+    var httpContext = System.Web.HttpContext.Current;
+    int pageIndex;
+    int pageCount = 20;
+    var obj = httpContext.Request["pageIndex"];
+    int.TryParse(obj == null ? "0" : obj.ToString(), out pageIndex);
+    int pageNum = Convert.ToInt32(
+        Math.Ceiling(ViewCommon.DataEntiyies.DataLists.Count(d => d.ColumnId == Model.Id || d.ColumnListId == Model.Id) * 1.00 / pageCount)) - 1;
+    if (pageNum < 0)
+    {
+        pageNum = 0;
+    }
+}
+@model Model.Column
+@section styles{
+    <link href="/Attachments/SmallScreen/File/Css/product.css" rel="stylesheet" />
+    <style type="text/css">
+        .list-area {
+            padding: 10px;
+        }
+    </style>
+}
+<div class="list-area">
+    <ul class="product-list">
+
+        @{
+            var list = ViewCommon.DataEntiyies.DataLists.Where(d => d.ColumnId == Model.Id || d.ColumnListId == Model.Id)
+                .OrderByDescending(d => d.Id)
+                .Skip(pageIndex * pageCount)
+                .Take(pageCount)
+                .ToList();
+            foreach (var item in list)
+            {
+                <li class="tem_wp2">
+                    <a href="@Url.Action("Product", "Home", new { id = item.Id })" title="@item.Name" target="_self">
+                        <img src="/FileImg/@item.Img" title="@item.Name" alt="@item.Name">
+                        <h2 style="height: 58px;"><span>@item.Name</span></h2>
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+</div>
+<nav>
+    <ul class="pager" style="padding:0px 15px;">
+        @{
+            var perUrl = string.Empty;
+            if (pageIndex > 0)
+            {
+                if (Model.Type == Web.Areas.Admin.Models.ColumnType.ColumnList)
+                {
+                    perUrl =
+                        Url.Action("ColumnList", "Home", new { id = Model.Id });
+                }
+                else
+                {
+                    perUrl = Url.Action("Column", "Home", new { id = Model.Id });
+                }
+                perUrl += "?pageIndex=" + (pageIndex - 1).ToString();
+            }
+            var nextUrl = string.Empty;
+            if (pageIndex < pageNum)
+            {
+                if (Model.Type == Web.Areas.Admin.Models.ColumnType.ColumnList)
+                {
+                    perUrl =
+                        Url.Action("ColumnList", "Home", new { id = Model.Id });
+                }
+                else
+                {
+                    perUrl = Url.Action("Column", "Home", new { id = Model.Id });
+                }
+                perUrl += "?pageIndex=" + (pageIndex + 1).ToString();
+            }
+        }
+        <li class="previous"><a href="@perUrl"><span aria-hidden="true">&larr;</span>上一页</a></li>
+        <li style="line-height:35px;">@(pageIndex + 1) / @(pageNum + 1)</li>
+        <li class="next"><a href="@nextUrl">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+</nav>

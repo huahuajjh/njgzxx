@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Template/SmallScreen/Shared/_Layout_One.cshtml";
+}
+@model Model.Hiring
+@section styles{
+    <style type="text/css">
+        ul.info-list {
+            margin: 0px;
+            padding: 0px;
+            font-size: 100%;
+        }
+        ul.info-list li {
+            position: relative;
+            padding: 8px 5px 8px 90px;
+            border-bottom: 1px solid #ddd;
+            color: #818181;
+            list-style: none;
+        }
+            ul.info-list li span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 8px 5px;
+                width: 80px;
+                word-wrap: break-word;
+                margin-left:10px;
+            }
+        .met_title {
+            padding: 25px 20px 10px 20px;
+            font-size: 16px;
+            margin: 0px;
+            border-bottom: 1px solid #ddd;
+        }
+        .met_nav_contbox {
+            padding: 15px 10px;
+            border: 0;
+        }
+    </style>
+}
+<ul class="info-list">
+    <li><span>发布时间</span>@Model.CreateDate.ToString("yyyy-MM-dd")</li>
+    <li><span>招聘部门</span>@Model.Department</li>
+    <li><span>工作方式</span>@Model.WorkType</li>
+    <li><span>薪资待遇</span>@Model.Salary</li>
+    <li><span>工作地点</span>@Model.Address</li>
+    <li><span>招聘人数</span>@Model.PersonNum</li>
+</ul>
+<h1 class="met_title"><span class="glyphicon glyphicon-list-alt"></span> 详细信息</h1>
+<div class="met_nav_contbox">
+    @(new HtmlString(Model.Introduction))
+</div>

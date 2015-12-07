@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+
+    <style type="text/css">
+        .dropdown-menu {
+            border: 1px solid #e2e7eb;
+        }
+    </style>
+}
+@section scripts{
+}
+<form method="post" action="@Url.Action("Add", "Shuffling")" class="panel panel-inverse" data-parsley-validate="true" enctype="multipart/form-data">
+    <div class="panel-heading">
+        <button type="submit" class="btn btn-primary btn-xs pull-right">提交</button>
+        <h4 class="panel-title">新增轮播图</h4>
+    </div>
+    <div class="panel-body panel-form">
+        <div class="form-horizontal form-bordered">
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">标题 <span class="text-danger">*</span> :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" name="Name" placeholder="请输入栏目类型名称"
+                           data-parsley-required="true"
+                           data-parsley-required-message="请输入栏目类型名称">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">介绍 :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <textarea name="Introduce" placeholder="请输入介绍" class="form-control" maxlength="300" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">Url :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="text" name="Url" placeholder="请输入Url">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">Img :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="file" name="fileImg">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-sm-4 ui-sortable">权重 :</label>
+                <div class="col-md-6 col-sm-6 ui-sortable">
+                    <input class="form-control" type="number" name="Sort" min="0" max="255" value="0" placeholder="请输入权重">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

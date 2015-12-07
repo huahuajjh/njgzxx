@@ -1,0 +1,95 @@
+﻿@{
+    Layout = "~/Views/Template/SmallScreen/Shared/_Layout.cshtml";
+    var col = ViewBag.Col as Model.Column;
+}
+@section styles{
+    <link href="/Attachments/SmallScreen/File/Css/layout_one.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+}
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#see-zi").click(function () {
+                $(".menu-zi").removeClass("menu-zi-out").addClass("menu-zi-in");
+            });
+            $(".menu-zi").click(function (e) {
+                if (e.target == this)
+                    $(this).removeClass("menu-zi-in").addClass("menu-zi-out");
+            });
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+}
+<div class="menu-zi">
+    <ul class="menu-datas">
+        @{
+            var cols = ViewCommon.DataEntiyies.Columns.Where(d => d.ParentId == col.Id && d.Show == true).ToList();
+            foreach (var item in cols)
+            {
+                if (item.Type == Web.Areas.Admin.Models.ColumnType.ColumnList)
+                {
+                    <li><a href="@Url.Action("ColumnList", "Home", new { id = item.Id })">@item.Name</a></li>
+                }
+                else if (item.Type == Web.Areas.Admin.Models.ColumnType.UrlPage)
+                {
+                    <li><a href="@item.Url">@item.Name</a></li>
+                }
+                else
+                {
+                    <li><a href="@Url.Action("Column", "Home", new { id = item.Id })">@item.Name</a></li>
+                }
+            }
+        }
+    </ul>
+</div>
+<ul class="breadcrumb breadcrumb-dark" style="background: #34495E">
+    <li><a href="/">主页</a></li>
+    @{
+        List<Model.Column> listCol = new List<Model.Column>();
+        {
+            var first = ViewCommon.DataEntiyies.Columns.FirstOrDefault(d => d.Id == col.ParentId);
+        setCol:
+            if (first != null)
+            {
+                listCol.Add(first);
+                first = ViewCommon.DataEntiyies.Columns.FirstOrDefault(d => d.Id == first.ParentId);
+                goto setCol;
+            }
+        }
+        foreach (var item in listCol.OrderBy(d => d.Id))
+        {
+            if (item.Type == Web.Areas.Admin.Models.ColumnType.ColumnList)
+            {
+                <li><a href="@Url.Action("ColumnList", "Home", new { id = item.Id })">@item.Name</a></li>
+            }
+            else if (item.Type == Web.Areas.Admin.Models.ColumnType.UrlPage)
+            {
+                <li><a href="@item.Url">@item.Name</a></li>
+            }
+            else
+            {
+                <li><a href="@Url.Action("Column", "Home", new { id = item.Id })">@item.Name</a></li>
+            }
+        }
+    }
+    @if (col.Type == Web.Areas.Admin.Models.ColumnType.ColumnList)
+    {
+        <li class="active"><a href="@Url.Action("ColumnList", "Home", new { id = col.Id })">@col.Name</a></li>
+    }
+    else if (col.Type == Web.Areas.Admin.Models.ColumnType.UrlPage)
+    {
+        <li class="active"><a href="@col.Url">>@col.Name</a></li>
+    }
+    else
+    {
+        <li class="active"><a href="@Url.Action("Column", "Home", new { id = col.Id })">@col.Name</a></li>
+    }
+</ul>
+<div class="header-title">
+    <h1>@ViewBag.Title</h1>
+    @if (cols.Count > 0)
+    {
+        <h3 id="see-zi"><span class="glyphicon glyphicon-menu-hamburger"></span>查看子类</h3>
+    }
+</div>
+@RenderBody()
