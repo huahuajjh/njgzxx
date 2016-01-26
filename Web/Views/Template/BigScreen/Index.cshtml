@@ -9,9 +9,98 @@
         .rightInfo {
             margin-top: 0;
         }
+        .mr_frbox {
+            padding: 24px 0px 0px;
+            width: 1200px;
+            position: relative;
+        }
+
+        .mr_frUl {
+            height: 407px;
+            width: 1200px;
+        }
+
+        .yfwz {
+            display:block;
+            text-align: center;
+            font-family: Microsoft Yahei;
+            font-size: 18px;
+            color: #4b4b4b;
+            margin-top: 25px;
+            position:relative;
+        }
+        .swiper-button-prev {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
+            left: 10px;
+            right: auto;
+        }
+        .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
+            right: 10px;
+            left: auto;
+        }
+        .swiper-button-next, .swiper-button-prev {
+            position: absolute;
+            top: 60%;
+            width: 27px;
+            height: 44px;
+            margin-top: -22px;
+            z-index: 10;
+            cursor: pointer;
+            -moz-background-size: 27px 44px;
+            -webkit-background-size: 27px 44px;
+            background-size: 27px 44px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .swiper-button-next {
+            margin-right: -30px;
+        }
+        .swiper-button-prev {
+            margin-left: -30px;
+        }
+        .left-icon {
+            width: 5px;
+            height: 8px;
+            padding-left: 10px;
+            margin-bottom:1.5px;
+            display: inline-block;
+            background: url("http://g.alicdn.com/aliyun/www-dpl/0.4.27/knight/images/common-header/sidebar-trangle.png") no-repeat 0 -8px;
+        }
+        .list{
+            margin:10px;
+        }
+         .list > li:not(:first-child) {
+            margin-top: 7px;
+        }
+        .list > li > span {
+            float:right;
+        }
+        .list > li > a {
+            color: #454545;
+        }
+        .showGSMsg{
+            height:100%;
+            overflow:hidden;
+            position:relative;
+        }
+         .showGSMsg:after {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            content: "";
+            display: block;
+            height: 50px;
+            background: -ms-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+            background: -moz-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%,from(rgba(255,255,255,0)), to(rgba(255,255,255,1)));
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,0)), to(rgba(255,255,255,1)));
+            background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+            background: -o-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+        }
     </style>
 }
-<div class="swiper-container" style="width:1200px;">
+<div class="swiper-container" style="width:1200px;height:400px;">
     <div class="swiper-wrapper">
         @{
             {
@@ -30,7 +119,60 @@
     <div class="pagination"></div>
 </div>
 <div class="content-container container">
-    <div id="synopsis-title" class="xzbt">
+        <ul id="synopsis-content">
+            <li>
+                <div class="scrolldoorFrame">
+                    <ul class="scrollUl">
+                        <li class="sd01" value="0"><a href="">关于我们</a></li>
+                        <li class="sd02" value="1"><a href="">新闻中心</a></li>
+                        <li class="sd02" value="2"><a href="">行业动态</a></li>
+                    </ul>
+                    <div class="cont">
+                        <div id="c00" class="showGSMsg">
+                            @(new HtmlString(ViewCommon.DataEntiyies.Columns.FirstOrDefault(d => d.Id == 16).Introduce))
+                        </div>
+                        <div id="c01" class="hidden">
+                            <ul class="list">
+                                @{
+                                    var newList = ViewCommon.DataEntiyies.DataLists
+                                        .Where(d => d.ColumnListId == 25 || d.ColumnId == 25)
+                                        .OrderBy(d => d.Id)
+                                        .Take(7)
+                                        .ToList();
+                                }
+                                @foreach (var item in newList)
+                                {
+                                    var url = Url.Action("Content", "Home", new { id = item.Id });
+                                    <li><a href="@url" target="_blank"><span class="left-icon"></span> @item.Name</a><span>@item.CreateTime.ToString("yyyy-MM-dd")</span></li>
+                                }
+                            </ul>
+                        </div>
+                        <div id="c02" class="hidden">
+                            <ul class="list">
+                                @{
+                                    var dtList = ViewCommon.DataEntiyies.DataLists
+                                        .Where(d => d.ColumnListId == 1016 || d.ColumnId == 1016)
+                                        .OrderBy(d => d.Id)
+                                        .Take(7)
+                                        .ToList();
+                                }
+                                @foreach (var item in dtList)
+                                {
+                                    var url = Url.Action("Content", "Home", new { id = item.Id });
+                                    <li><a href="@url" target="_blank"><span class="left-icon"></span> @item.Name</a><span>@item.CreateTime.ToString("yyyy-MM-dd")</span></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li style="padding-top: 150px;">
+                @{Html.RenderPartial("~/Views/Template/BigScreen/Shared/CompanyContactMessage.cshtml");}
+            </li>
+        </ul>
+    </div>
+@*<div class="content-container container">
+   <div id="synopsis-title" class="xzbt">
         <div class="xzbts"><em>关于我们<font>PROFILE</font></em><span>认识感知从这里开始</span></div>
     </div>
     <ul id="synopsis-content">
@@ -41,73 +183,115 @@
             @{Html.RenderPartial("~/Views/Template/BigScreen/Shared/CompanyContactMessage.cshtml");}
         </li>
     </ul>
-    <div class="scrolldoorFrame">
-        <div class="xzbt">
-            <div class="xzbts"><em>新闻中心<font>NEWS</font></em><span>了解感知最新动态，洞悉行业前沿资讯，探寻商业新模式。</span></div>
-        </div>
-        <ul class="scrollUl">
-            @{
-                var listCols = ViewCommon.DataEntiyies.Columns.Where(d => d.ParentId == 25).ToList();
-                foreach (var item in listCols)
-                {
-                    var url = Url.Action("ColumnList", "Home", new { id = item.Id });
-                    <li class="sd0@(listCols.Last().Id == item.Id ? "1" : "2")" value="@(item.Id)"><a href="@(url)">@(item.Name)</a></li>
+</div>*@
+<div class="mr_frbox" style="  width: 1200px;  margin: 0 auto;">
+    <div id="synopsis-title" class="xzbt">
+        <div class="xzbts"><em>方案中心</em></div>
+    </div>
+    <div class="mr_frUl">
+        <div class="swiper-container" id="swiper-scheme" style="height:375px;">
+            <div class="swiper-wrapper">
+                @{
+                    var faList = ViewCommon.DataEntiyies.DataLists
+                        .Where(d => d.ColumnListId == 20 || d.ColumnId == 20)
+                        .OrderBy(d => d.Id)
+                        .Take(12)
+                        .ToList();
                 }
-            }
-        </ul>
-        <div class="bor03 cont">
-            @foreach (var item in listCols)
-            {
-                var list = ViewCommon.DataEntiyies.DataLists
-                .Where(d => d.ColumnListId == item.Id)
-                .OrderBy(d => d.Id)
-                .Take(6)
-                .ToList();
-                <div id="c0@(item.Id)" class="@(listCols.Last().Id == item.Id ? "" : "hidden")">
-                    <div class="xz_hmnewtt"></div>
-                    <div class="xz_hmnewcn">
-                        @foreach (var t in list)
-                        {
-                            var url = Url.Action("Content", "Home", new { id = t.Id });
-                            <div class="xz_hm_news @(string.IsNullOrEmpty(t.Img) ? "not_img" : "")">
-                                <a href="@url" target="_blank" title="@t.Name">
-                                    <img src="/FileImg/@t.Img" alt="@t.Name">
-                                    <h1>@t.Name</h1>
-                                    <p><span class="glyphicon glyphicon-time"></span> @t.CreateTime.ToString("yyyy-MM-dd")</p>
-                                    <span class="news-content">@t.Describe</span>
-                                </a>
-                            </div>
-                        }
-                        <div class="clear"></div>
+                @foreach (var item in faList)
+                {
+                    var url = Url.Action("Content", "Home", new { id = item.Id });
+                    <div class="swiper-slide">
+                        <a href="@url" title="@item.Name" target="_blank">
+                            <img src="/FileImg/@item.Img" style="width: 261px; height: 328px;">
+                            <span class="yfwz">@item.Name</span>
+                        </a>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
+        <div class="swiper-button-next" id="scheme_next"></div>
+        <div class="swiper-button-prev" id="scheme_prev"></div>
     </div>
 </div>
-@section scripts{
-    <script src="/Attachments/BigScreen/Script/idangerous.swiper.min.js"></script>
-    <script src="/Attachments/BigScreen/Script/jquery.ellipsis.js"></script>
-    <script type="text/javascript">
-        var mySwiper = new Swiper('.swiper-container', {
-            autoplay: 5000,
-            calculateHeight: true,
-            loop: true,
-            pagination: '.pagination',
-            paginationClickable: true
-        });
-        $(function () {
-            $(".news-content").ellipsis({ row: 3 });
-            $(".scrollUl > li").mouseover(function () {
-                $(this).attr("class", "sd01").siblings().attr("class", "sd02");
-                $("#c0" + $(this).attr("value")).removeClass().siblings().addClass("hidden");
-            });
-            $(".xz_hm_news > a > img").each(function () {
-                if ($(this).attr("src") == "") {
-                    $(this).css("display", "none").nextAll().css("left", "0");
+<div class="mr_frbox" style="  width: 1200px;  margin: 0 auto;">
+    <div id="synopsis-title" class="xzbt">
+        <div class="xzbts"><em>产品中心</em></div>
+    </div>
+    <div class="mr_frUl">
+        <div class="swiper-container" id="swiper-product" style="height:375px;">
+            <div class="swiper-wrapper">
+                @{
+                    var cpList = ViewCommon.DataEntiyies.DataLists
+                        .Where(d => d.ColumnListId == 19 || d.ColumnId == 19)
+                        .OrderBy(d => d.Id)
+                        .Take(12)
+                        .ToList();
                 }
+                @foreach (var item in cpList)
+                {
+                    var url = Url.Action("Content", "Home", new { id = item.Id });
+                    <div class="swiper-slide">
+                        <a href="@url" title="@item.Name" target="_blank">
+                            <img src="/FileImg/@item.Img" style="width: 261px; height: 328px;">
+                            <span class="yfwz">@item.Name</span>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="swiper-button-next" id="product-next"></div>
+        <div class="swiper-button-prev" id="product-prev"></div>
+    </div>
+</div>
+
+    @section scripts{
+        <script src="/Attachments/BigScreen/Script/idangerous.swiper.min.js"></script>
+        <script src="/Attachments/BigScreen/Script/jquery.ellipsis.js"></script>
+        <script type="text/javascript">
+            var mySwiper = new Swiper('.swiper-container', {
+                autoplay: 5000,
+                calculateHeight: true,
+                loop: true,
+                pagination: '.pagination',
+                paginationClickable: true
             });
-        });
-    </script>
-}
+            $(function () {
+                $(".news-content").ellipsis({ row: 3 });
+                $(".scrollUl > li").mouseover(function () {
+                    $(this).attr("class", "sd01").siblings().attr("class", "sd02");
+                    $("#c0" + $(this).attr("value")).removeClass("hidden").siblings().addClass("hidden");
+                });
+                $(".xz_hm_news > a > img").each(function () {
+                    if ($(this).attr("src") == "") {
+                        $(this).css("display", "none").nextAll().css("left", "0");
+                    }
+                });
+            });
+            var scheme = new Swiper('#swiper-scheme', {
+                loop: true,
+                slidesPerView: 4,
+                slidesPerGroup: 4
+
+            });
+            $("#scheme_next").click(function () {
+                scheme.swipeNext();
+            });
+            $("#scheme_prev").click(function () {
+                scheme.swipePrev();
+            });
+            var product = new Swiper('#swiper-product', {
+                loop: true,
+                slidesPerView: 4,
+                slidesPerGroup: 4
+
+            });
+            $("#product-next").click(function () {
+                product.swipeNext();
+            });
+            $("#product-prev").click(function () {
+                product.swipePrev();
+            });
+        </script>
+    }
 

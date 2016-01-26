@@ -412,6 +412,7 @@
     <Content Include="Attachments\BigScreen\CSS\bootstrap-theme.min.css" />
     <Content Include="Attachments\BigScreen\CSS\bootstrap.css" />
     <Content Include="Attachments\BigScreen\CSS\idangerous.swiper.css" />
+    <Content Include="Attachments\BigScreen\CSS\index - 复制.css" />
     <Content Include="Attachments\BigScreen\CSS\index.css" />
     <Content Include="Attachments\BigScreen\CSS\jquery-ui.css" />
     <Content Include="Attachments\BigScreen\CSS\message.css" />
@@ -438,6 +439,7 @@
     <Content Include="Attachments\BigScreen\Images\qq.png" />
     <Content Include="Attachments\BigScreen\Images\right_bar.jpg" />
     <Content Include="Attachments\BigScreen\Images\scalltop.png" />
+    <Content Include="Attachments\BigScreen\Images\sidebar-trangle.png" />
     <Content Include="Attachments\BigScreen\Script\bootstrap.min.js" />
     <Content Include="Attachments\BigScreen\Script\idangerous.swiper.min.js" />
     <Content Include="Attachments\BigScreen\Script\jquery-2.1.4.min.js" />
@@ -447,6 +449,8 @@
     <Content Include="Attachments\BigScreen\Script\jquery.jqprint-0.3.js" />
     <Content Include="Attachments\BigScreen\Script\jquery.qrcode.min.js" />
     <Content Include="Attachments\BigScreen\Script\scripts.js" />
+    <Content Include="FileImg\a0f0382b-af04-4075-9540-fcb7d6a29215.jpg" />
+    <Content Include="FileImg\cbb63bee-e986-4aab-a6bc-189f312bb2e3.jpg" />
     <Content Include="FileImg\说明.txt" />
     <Content Include="Global.asax" />
     <Content Include="Attachments\SmallScreen\File\Css\index.css" />
@@ -476,6 +480,14 @@
     <Content Include="Attachments\SmallScreen\File\Plugins\mustache\mustache.min.js" />
     <Content Include="Attachments\SmallScreen\File\Plugins\swiper\idangerous.swiper.css" />
     <Content Include="Attachments\SmallScreen\File\Plugins\swiper\idangerous.swiper.min.js" />
+    <Content Include="image\11.jpg" />
+    <Content Include="image\22.jpg" />
+    <Content Include="image\33.jpg" />
+    <Content Include="image\42.jpg" />
+    <Content Include="image\43.jpg" />
+    <Content Include="image\44.jpg" />
+    <Content Include="image\467.jpg" />
+    <Content Include="image\66.jpg" />
     <Content Include="Views\Template\BigScreen\Template.xml" />
     <Content Include="Views\Template\SmallScreen\Template.xml" />
     <Content Include="Web.config">
@@ -494,7 +506,9 @@
     <Folder Include="Attachments\SmallScreen\File\Js\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Web.config" />

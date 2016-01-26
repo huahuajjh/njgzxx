@@ -26,10 +26,11 @@
 }
 
 .scrolldoorFrame {
-    width: 789px;
+    width: 1200px;
     position: relative;
     margin: 0px auto;
     overflow: hidden;
+    margin-bottom: 20px;
 }
 
 .xzbt {
@@ -78,24 +79,26 @@
 }
 
 .scrollUl {
-    margin-top: 30px;
+    width: 1200px;
+    height: 160px;
     position: relative;
     overflow: hidden;
+    padding-left: 730px;
     overflow: hidden;
     background: url('../Images/hm_new_top.png') no-repeat left bottom;
 }
 
     .scrollUl li {
-        display: inline-block;
         width: 115px;
         height: 70px;
         text-align: center;
         line-height: 32px;
         position: relative;
+        float: right;
+        margin-top: 90px;
     }
-
         .scrollUl li a {
-            color: #000;
+            color:#000;
         }
 
 .sd01 {
@@ -112,18 +115,27 @@
     color: #666;
 }
 
+.bor03 {
+    position: relative;
+    background: url('../Images/hm_footbt.png') no-repeat center bottom;
+    padding-bottom: 9px;
+}
+
 .cont {
-    padding: 10px;
-    border-left:1px solid #E0E0E0;
-    border-right:1px solid #E0E0E0;
-    border-bottom:1px solid #E0E0E0;
-    background-color:#fff;
-    height:250px;
+    padding: 0px;
 }
 
 .xz_hmnewtt {
+    width: 1200px;
     height: 38px;
+    position: relative;
     background: url('../Images/hm_toptt.png') no-repeat 0 0;
+}
+
+.xz_hmnewcn {
+    width: 1200px;
+    position: relative;
+    background: url('../Images/hm_conbg.png') repeat-y 0 0;
 }
 
 .xz_hm_news {
@@ -210,26 +222,21 @@
             background: #f8f8f8;
             box-shadow: 0 6px 17px rgba(110,110,110,.7);
         }
-
-    .xz_hm_news.not_img > a img {
-        display: none;
+    .xz_hm_news.not_img > a img{
+        display:none;
     }
-
     .xz_hm_news.not_img > a h1 {
-        left: 10px;
-        width: 100%;
+        left:10px;
+        width:100%;
     }
-
     .xz_hm_news.not_img > a > span {
-        left: 10px;
-        width: 100%;
+        left:10px;
+        width:100%;
     }
-
     .xz_hm_news.not_img > a p {
-        left: 30px;
-        width: 100%;
+        left:30px;
+        width:100%;
     }
-
 .content-container {
     color: #5A5A5A;
 }

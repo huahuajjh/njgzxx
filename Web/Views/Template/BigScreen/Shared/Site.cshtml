@@ -14,7 +14,7 @@
     <script src="~/Attachments/BigScreen/Script/jquery.jqprint-0.3.js"></script>
 </head>
 <body>
-    <style>
+<style>
         #navigation span {
             font-size: 10px;
         }
@@ -112,14 +112,14 @@
             }
     </style>
     <div class="actGotop"><a href="javascript:;" title="Top"></a></div>
-    <div id="overall-wrap">
-        <div id="header">
+    <div id="overall-wrap"  >
+        <div id="header" style="width:1200px;margin:0 auto">
             <div id="logo">
                 <img src="/Attachments/BigScreen/Images/logo.png" />
             </div>
             <div id="company-title">南京感知信息技术有限公司</div>
         </div>
-        <ul id="navigation">
+        <ul id="navigation" style="width:1200px;margin:0 auto">
             <li><a href="/">网站首页</a></li>
             @{
                 var colTopList = ViewCommon.DataEntiyies.Columns.Where(d => d.ParentId == null && d.Show == true).ToList();
@@ -142,7 +142,7 @@
                                         urlTwo = Url.Action("ColumnList", "Home", new { id = it.Id });
                                     }
                                     <li>
-                                        <a href="@urlTwo" style="font-weight: normal;"><span class="glyphicon glyphicon-menu-right"></span>&nbsp;@it.Name</a>
+                                        <a href="@urlTwo" style="font-weight: normal;padding-left:5px;"><span class="glyphicon glyphicon-menu-right"></span>&nbsp;@it.Name</a>
                                         @{
                                     var colThreeList = ViewCommon.DataEntiyies.Columns.Where(d => d.ParentId == it.Id && d.Show == true).ToList();
                                         }
@@ -171,7 +171,70 @@
             }
         </ul>
         @RenderBody()
-        <div id="footer">
+        @*<div class="mr_frbox"  style="  width: 1200px;  margin: 0 auto;">
+           <div id="synopsis-title" class="xzbt">
+        <div class="xzbts"><em>方案中心</em></div>
+                 </div>
+                <div class="mr_frUl">
+                    <div class="tempWrap" style="overflow:hidden; position:relative; width:1228px">
+                     <ul id="mr_fu" style="width: 1200px; position: relative; overflow: hidden; padding: 0px; margin: 0 auto; ">
+                        
+                    <li style="float: left; width: 300px;"><a href="/Home/Content/4022" title="平安城市方案" target="_blank">
+                                    <img src="/image/11.jpg" style="width: 261px; height: 328px;"></a><span class="yfwz">
+                                        平安城市方案</span></li><li style="float: left; width: 300px;"><a href="/Home/Column/2032" title="建设智能化方案" target="_blank">
+                                    <img src="/image/22.jpg" style="width: 261px; height: 328px;"></a><span class="yfwz">
+                                        建设智能化方案</span></li><li style="float: left; width: 300px;"><a href="/Home/Column/2033" title="智慧校园方案" target="_blank">
+                                    <img src="/image/33.jpg" style="width: 261px; height: 328px;"></a><span class="yfwz">
+                                        智慧校园方案</span></li><li style="float: left; width: 300px;"><a href="/Home/Column/21" title="信息系统运维" target="_blank">
+                                    <img src="/image/66.jpg" style="width: 261px; height: 328px;"></a><span class="yfwz">
+                                        信息系统运维</span></li></ul>   
+                          
+                </div>
+             
+            </div>*@
+            @*<div class="mr_frbox" style="  width: 1200px;  margin: 0 auto;">
+                <div id="synopsis-title" class="xzbt">
+                    <div class="xzbts"><em>产品中心</em></div>
+                </div>
+                <div class="mr_frUl">
+                    <div class="tempWrap" style="overflow:hidden; position:relative; width:1228px">
+                        <ul id="mr_fu" style="width: 1200px; position: relative; overflow: hidden; padding: 0px; margin: 0 auto; ">
+
+                            <li style="float: left; width: 300px;">
+                                <a href="/Home/Product/4031" title="42寸液晶监视器" target="_blank">
+                                    <img src="/image/42.jpg" style="width: 261px; height: 328px;">
+                                </a><span class="yfwz">
+                                    42寸液晶监视器
+                                </span>
+                            </li>
+                            <li style="float: left; width: 300px;">
+                                <a href="/Home/Product/4036" title="经济网络高清NVR" target="_blank">
+                                    <img src="/image/43.jpg" style="width: 261px; height: 328px;">
+                                </a><span class="yfwz">
+                                    经济网络高清NVR
+                                </span>
+                            </li>
+                            <li style="float: left; width: 300px;">
+                                <a href="/Home/Product/4038" title="9路高清解码器" target="_blank">
+                                    <img src="/image/44.jpg" style="width: 261px; height: 328px;">
+                                </a><span class="yfwz">
+                                    9路高清解码器
+                                </span>
+                            </li>
+                            <li style="float: left; width: 300px;">
+                                <a href="/Home/Product/4042" title="百万无线网云台摄像机" target="_blank">
+                                    <img src="/image/467.jpg" style="width: 261px; height: 328px;">
+                                </a><span class="yfwz">
+                                    百万无线网云台摄像机
+                                </span>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>*@
+        <div id="footer" style="width:1200px;margin:0 auto">
             <ul class="container">
                 @foreach (var item in colTopList)
                 {
@@ -212,6 +275,9 @@
                     </li>
                 }
             </ul>
+        </div>
+        <div style="width:1200px;margin:0 auto">
+            版权所 南京感知信息技术有限公司 电话： 4000035679 地址：江苏省南京市
         </div>
     </div>
     <div id="kefu">

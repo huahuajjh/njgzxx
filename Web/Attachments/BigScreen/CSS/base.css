@@ -7,7 +7,7 @@ img {border: none;}
 #overall-wrap a{text-decoration: none}
 .display-none{ display: none;}
 #overall-wrap {min-width:1200px;background-position: 50% 0%;background-repeat: repeat-x;}
-#header{height: 118px;background-color: #6699CC;width: 100%;text-align:center;}
+#header{height: 118px;background-color: #125CA1;width: 100%;text-align:center;}
 #logo{height: 70px;padding-top: 8px;}
 #company-title{height: 40px; font-size: 20px; line-height: 140%; color: #fff;}
 #navigation{width: 100%;background-color: #006699;color: #fff;text-align: center;}
@@ -25,13 +25,12 @@ img {border: none;}
 #navigation > li > ul > li { position: relative;}
 .swiper-container{ height:auto;width: 100%; color: #fff;text-align: center; }
 #navigation > li > ul > li:hover > ul{background-color: #6699CC;width: 100%;position:absolute;display: block;left: 100%;top: 0;}
-#footer {width: 100%;background: #6699cc;position: absolute;bottom: 0;font-weight: 600;z-index: 3;}
+#footer {background: #125CA1;position: relative;font-weight: 600;z-index: 3;margin-left:auto;margin-right:auto;}
 #footer a{ color: #fff;}
 #footer > .container {margin-top: 25px;}
 #footer > .container > li {display:inline-table;margin-right: 60px;}
-#footer > .container > li > label{color: #006699;margin-bottom:10px;display: block;font-size: 18px;}
+#footer > .container > li > label{color: #cccccc;margin-bottom:10px;display: block;font-size: 18px;}
 #footer > .container > li > ul > li{ line-height: 22px;}
-body:after{ content: "";display: block;height: 316px;}
 .container{min-width:1200px;margin: 0 auto;}
 .font-size16{ font-size: 16px;}
 .clear {clear: both;}
